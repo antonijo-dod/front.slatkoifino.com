@@ -31,7 +31,7 @@ export default function RootLayout({
                 className="flex items-center gap-2 font-bold text-xl"
               >
                 <Heart className="w-6 h-6 text-pink-500" />
-                Sweet Creations
+                Martini kolaci
               </Link>
 
               <div className="hidden md:flex items-center gap-6">
@@ -39,13 +39,13 @@ export default function RootLayout({
                   href="/"
                   className="text-sm font-medium hover:text-pink-600 transition-colors"
                 >
-                  Home
+                  Pocetna
                 </Link>
                 <Link
-                  href="/recipes"
+                  href="/recepti"
                   className="text-sm font-medium hover:text-pink-600 transition-colors"
                 >
-                  All Recipes
+                  Svi recepti
                 </Link>
                 <Link
                   href="/about"
@@ -54,10 +54,10 @@ export default function RootLayout({
                   About
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/kontakt"
                   className="text-sm font-medium hover:text-pink-600 transition-colors"
                 >
-                  Contact
+                  Kontakt
                 </Link>
               </div>
 
@@ -101,10 +101,10 @@ export default function RootLayout({
                   </li>
                   <li>
                     <Link
-                      href="/recipes"
+                      href="/recepti"
                       className="text-muted-foreground hover:text-foreground"
                     >
-                      All Recipes
+                      Svi recepti
                     </Link>
                   </li>
                   <li>
@@ -117,10 +117,10 @@ export default function RootLayout({
                   </li>
                   <li>
                     <Link
-                      href="/contact"
+                      href="/kontakt"
                       className="text-muted-foreground hover:text-foreground"
                     >
-                      Contact
+                      Kontakt
                     </Link>
                   </li>
                 </ul>
@@ -131,7 +131,7 @@ export default function RootLayout({
                 <ul className="space-y-2 text-sm">
                   <li>
                     <Link
-                      href="/recipes?category=chocolate"
+                      href="/recept?category=chocolate"
                       className="text-muted-foreground hover:text-foreground"
                     >
                       Chocolate
@@ -139,7 +139,7 @@ export default function RootLayout({
                   </li>
                   <li>
                     <Link
-                      href="/recipes?category=vanilla"
+                      href="/recept?category=vanilla"
                       className="text-muted-foreground hover:text-foreground"
                     >
                       Vanilla
@@ -147,7 +147,7 @@ export default function RootLayout({
                   </li>
                   <li>
                     <Link
-                      href="/recipes?category=fruit"
+                      href="/recept?category=fruit"
                       className="text-muted-foreground hover:text-foreground"
                     >
                       Fruit
@@ -155,7 +155,7 @@ export default function RootLayout({
                   </li>
                   <li>
                     <Link
-                      href="/recipes?category=cupcakes"
+                      href="/recept?category=cupcakes"
                       className="text-muted-foreground hover:text-foreground"
                     >
                       Cupcakes

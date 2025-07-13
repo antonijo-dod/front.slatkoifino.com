@@ -49,16 +49,36 @@ const getRecipe = (slug: string) => {
   return recipes[slug as keyof typeof recipes] || null;
 };
 
-export default function RecipePage({ params }: { params: { slug: string } }) {
-  const recipe = getRecipe(params.slug);
+export default async function RecipePage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const slug = await params.slug;
+  const article = await fetch(
+    `${process.env.API_URL}/api/articles?populate=*&filters[slug][$eq]=${slug}`
+  );
+  const { data } = await article.json();
 
-  if (!recipe) {
+  const post = data[0] || {};
+  console.log("🚀 ~ post:", post);
+  const { title, description, featured_image, instructions
+    
+   } = post;
+  const instructionsArray = instructions ? instructions : [];
+
+  // console.log("🚀 ~ PostPage ~ data:", data);
+  // const post = data[0] || {};
+  // const { title, description, featured_image, instructions } = post;
+  // const instructionsArray = instructions ? instructions : [];
+
+  if (!data) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Recipe not found</h1>
           <Button asChild>
-            <Link href="/recipes">Back to Recipes</Link>
+            <Link href="/recepti">Nazad na recepte</Link>
           </Button>
         </div>
       </div>
@@ -70,9 +90,9 @@ export default function RecipePage({ params }: { params: { slug: string } }) {
       <div className="max-w-4xl mx-auto px-4">
         {/* Back Button */}
         <Button variant="ghost" asChild className="mb-6">
-          <Link href="/recipes" className="flex items-center gap-2">
+          <Link href="/recepti" className="flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" />
-            Back to Recipes
+            Nazad na recepte
           </Link>
         </Button>
 
@@ -80,8 +100,12 @@ export default function RecipePage({ params }: { params: { slug: string } }) {
         <div className="mb-8">
           <div className="relative h-96 rounded-lg overflow-hidden mb-6">
             <Image
-              src={recipe.image || "/placeholder.svg"}
-              alt={recipe.title}
+              imageUrl={
+                featured_image?.formats.medium
+                  ? `${process.env.API_URL}${featured_image?.formats.medium.url}`
+                  : ""
+              }
+              alt={title}
               fill
               className="object-cover"
               priority
@@ -90,10 +114,8 @@ export default function RecipePage({ params }: { params: { slug: string } }) {
 
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h1 className="text-4xl font-bold mb-2">{recipe.title}</h1>
-              <p className="text-lg text-muted-foreground">
-                {recipe.description}
-              </p>
+              <h1 className="text-4xl font-bold mb-2">{title}</h1>
+              <p className="text-lg text-muted-foreground">{description}</p>
             </div>
             <div className="flex gap-2">
               <Button variant="outline" size="icon">
@@ -109,7 +131,8 @@ export default function RecipePage({ params }: { params: { slug: string } }) {
           <div className="flex flex-wrap gap-6 text-sm">
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              <span className="font-medium">Prep:</span> {recipe.prepTime}
+              <span className="font-medium">Prep:</span>{" "}
+              {recipe.time_to_prepare}
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
@@ -117,11 +140,12 @@ export default function RecipePage({ params }: { params: { slug: string } }) {
             </div>
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4" />
-              <span className="font-medium">Serves:</span> {recipe.servings}
+              <span className="font-medium">Serves:</span> {recipe.portions}
             </div>
             <div className="flex items-center gap-2">
               <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-              <span className="font-medium">{recipe.rating}</span>
+              {/* TODO: Add difcutly instead */}
+              <span className="font-medium">5</span>
             </div>
           </div>
         </div>
