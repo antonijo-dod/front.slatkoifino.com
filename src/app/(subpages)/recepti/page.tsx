@@ -104,7 +104,7 @@ export default async function RecipesPage() {
                   src={
                     recipe.featured_image?.formats.medium
                       ? `${process.env.API_URL}${recipe.featured_image?.formats.medium.url}`
-                      : ""
+                      : "/images/placeholder.jpeg"
                   }
                   alt={recipe.title}
                   fill

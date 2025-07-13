@@ -54,23 +54,54 @@ export default async function RecipePage({
 }: {
   params: { slug: string };
 }) {
-  const slug = await params.slug;
+  const { slug } = await params;
+  console.log("🚀 ~ slug:", slug);
   const article = await fetch(
     `${process.env.API_URL}/api/articles?populate=*&filters[slug][$eq]=${slug}`
   );
   const { data } = await article.json();
 
   const post = data[0] || {};
-  console.log("🚀 ~ post:", post);
-  const { title, description, featured_image, instructions
-    
-   } = post;
-  const instructionsArray = instructions ? instructions : [];
 
-  // console.log("🚀 ~ PostPage ~ data:", data);
-  // const post = data[0] || {};
-  // const { title, description, featured_image, instructions } = post;
-  // const instructionsArray = instructions ? instructions : [];
+  const {
+    title,
+    description,
+    featured_image,
+    time_to_prepare,
+    portions,
+    difficulty,
+  } = post;
+
+  // // GET recipe instructions
+
+  const instructionsUrl = await fetch(
+    `${process.env.API_URL}/api/articles?filters[slug][$eq]=${slug}&populate[instructions][populate]=*`
+  );
+  const { data: recipe } = await instructionsUrl.json();
+  const instructions = recipe[0]?.instructions;
+
+  // Use Promise.all to make both requests at the same time
+  // const [articleRes, instructionsRes] = await Promise.all([
+  //   // `${process.env.API_URL}/api/articles?populate=*&filters[slug][$eq]=${slug}`,
+  //   `${process.env.API_URL}/api/articles?filters[slug][$eq]=${slug}&populate[instructions][populate]=*`,
+  // ]);
+  // console.log("🚀 ~ articleRes:", articleRes);
+
+  // const finalRecipe = {
+  //   ...articleRes.data[0].attributes,
+  //   id: articleRes.data[0].id,
+  //   instructions: instructionsRes.data[0].attributes.instructions, // Get instructions from the second call
+  // };
+
+  // const {
+  //   title,
+  //   description,
+  //   featured_image,
+  //   time_to_prepare,
+  //   portions,
+  //   difficulty,
+  //   instructions: instructionsResponse,
+  // } = finalRecipe;
 
   if (!data) {
     return (
@@ -100,10 +131,10 @@ export default async function RecipePage({
         <div className="mb-8">
           <div className="relative h-96 rounded-lg overflow-hidden mb-6">
             <Image
-              imageUrl={
-                featured_image?.formats.medium
-                  ? `${process.env.API_URL}${featured_image?.formats.medium.url}`
-                  : ""
+              src={
+                featured_image?.formats.large
+                  ? `${process.env.API_URL}${featured_image?.formats.large.url}`
+                  : "/images/placeholder.jpeg"
               }
               alt={title}
               fill
@@ -131,16 +162,15 @@ export default async function RecipePage({
           <div className="flex flex-wrap gap-6 text-sm">
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              <span className="font-medium">Prep:</span>{" "}
-              {recipe.time_to_prepare}
+              <span className="font-medium">Prep:</span> {time_to_prepare}
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              <span className="font-medium">Cook:</span> {recipe.cookTime}
+              <span className="font-medium">Cook:</span> {difficulty}
             </div>
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4" />
-              <span className="font-medium">Serves:</span> {recipe.portions}
+              <span className="font-medium">Serves:</span> {portions}
             </div>
             <div className="flex items-center gap-2">
               <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
@@ -158,14 +188,14 @@ export default async function RecipePage({
                 <CardTitle>Ingredients</CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2">
+                {/* <ul className="space-y-2">
                   {recipe.ingredients.map((ingredient, index) => (
                     <li key={index} className="flex items-start gap-2">
                       <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
                       <span className="text-sm">{ingredient}</span>
                     </li>
                   ))}
-                </ul>
+                </ul> */}
               </CardContent>
             </Card>
           </div>
@@ -178,16 +208,32 @@ export default async function RecipePage({
               </CardHeader>
               <CardContent>
                 <ol className="space-y-4">
-                  {recipe.instructions.map((instruction, index) => (
-                    <li key={index} className="flex gap-4">
-                      <span className="flex-shrink-0 w-8 h-8 bg-pink-500 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                        {index + 1}
-                      </span>
-                      <p className="text-sm leading-relaxed pt-1">
-                        {instruction}
-                      </p>
-                    </li>
-                  ))}
+                  {instructions.map(
+                    ({ id, instruction_step, instruction_image }, index) => (
+                      <li key={id} className="flex flex-col gap-4">
+                        <div className="flex gap-4">
+                          <span className="flex-shrink-0 w-8 h-8 bg-pink-500 text-white rounded-full flex items-center justify-center text-sm font-medium">
+                            {index + 1}
+                          </span>
+                          <p className="text-sm leading-relaxed pt-1">
+                            {instruction_step}
+                          </p>
+                        </div>
+                        {instruction_image && (
+                          <div className="ml-12">
+                            <div className="relative w-full h-56 flex-shrink-0">
+                              <Image
+                                src={`${process.env.API_URL}${instruction_image.url}`}
+                                alt={`Step ${index + 1} image`}
+                                fill
+                                className="object-cover rounded"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </li>
+                    )
+                  )}
                 </ol>
               </CardContent>
             </Card>
