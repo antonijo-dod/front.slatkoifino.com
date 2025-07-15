@@ -4,51 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Users, Star, ArrowLeft, Heart, Share2 } from "lucide-react";
 
-// Mock recipe data - in a real app, this would come from a database
-const getRecipe = (slug: string) => {
-  const recipes = {
-    "1": {
-      id: 1,
-      slug: "first",
-      title: "Classic Chocolate Cake",
-      description:
-        "Rich, moist chocolate cake with silky chocolate ganache that melts in your mouth",
-      image: "/placeholder.svg?height=500&width=800",
-      prepTime: "45 min",
-      cookTime: "35 min",
-      totalTime: "1h 20min",
-      servings: 8,
-      rating: 4.9,
-      difficulty: "Medium",
-      ingredients: [
-        "2 cups all-purpose flour",
-        "2 cups granulated sugar",
-        "3/4 cup unsweetened cocoa powder",
-        "2 teaspoons baking soda",
-        "1 teaspoon baking powder",
-        "1 teaspoon salt",
-        "2 large eggs",
-        "1 cup buttermilk",
-        "1 cup strong black coffee, cooled",
-        "1/2 cup vegetable oil",
-        "1 teaspoon vanilla extract",
-      ],
-      instructions: [
-        "Preheat your oven to 350°F (175°C). Grease and flour two 9-inch round cake pans.",
-        "In a large bowl, whisk together flour, sugar, cocoa powder, baking soda, baking powder, and salt.",
-        "In another bowl, beat eggs, then add buttermilk, coffee, oil, and vanilla extract.",
-        "Gradually add the wet ingredients to the dry ingredients, mixing until just combined.",
-        "Divide batter evenly between prepared pans.",
-        "Bake for 30-35 minutes, or until a toothpick inserted in center comes out clean.",
-        "Cool in pans for 10 minutes, then turn out onto wire racks to cool completely.",
-        "Frost with your favorite chocolate frosting and serve.",
-      ],
-    },
-  };
-
-  return recipes[slug as keyof typeof recipes] || null;
-};
-
 export default async function RecipePage({
   params,
 }: {

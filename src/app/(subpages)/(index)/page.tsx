@@ -122,7 +122,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">About Our Kitchen</h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            Welcome to our sweet corner of the internet! Here you'll find
+            Welcome to our sweet corner of the internet! Here yous find
             carefully crafted cake recipes that bring joy to every celebration.
             From classic favorites to creative new flavors, each recipe is
             tested with love and designed to create beautiful memories around
