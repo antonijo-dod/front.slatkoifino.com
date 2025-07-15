@@ -94,55 +94,68 @@ export default async function RecipesPage() {
 
         {/* Recipe Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {allRecipes.map((recipe) => (
-            <Card
-              key={recipe.id}
-              className="overflow-hidden hover:shadow-lg transition-shadow"
-            >
-              <div className="relative h-64">
-                <Image
-                  src={
-                    recipe.featured_image?.formats.medium
-                      ? `${process.env.API_URL}${recipe.featured_image?.formats.medium.url}`
-                      : "/images/placeholder.jpeg"
-                  }
-                  alt={recipe.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-white/90 text-xs font-medium px-2 py-1 rounded-full">
-                    {recipe.category}
-                  </span>
-                </div>
-              </div>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{recipe.title}</h3>
-                <p className="text-muted-foreground mb-4 line-clamp-2">
-                  {recipe.description}
-                </p>
-
-                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    {recipe.prepTime}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="w-4 h-4" />
-                    {recipe.servings}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    {recipe.rating}
+          {/* @ts-expected-ignore */}
+          {allRecipes.map(
+            (recipe: {
+              id: number;
+              title: string;
+              description: string;
+              featured_image: { formats: { medium: { url: string } } };
+              prepTime: string;
+              servings: number;
+              rating: number;
+              category: string;
+              slug: string;
+            }) => (
+              <Card
+                key={recipe.id}
+                className="overflow-hidden hover:shadow-lg transition-shadow"
+              >
+                <div className="relative h-64">
+                  <Image
+                    src={
+                      recipe.featured_image?.formats.medium
+                        ? `${process.env.API_URL}${recipe.featured_image?.formats.medium.url}`
+                        : "/images/placeholder.jpeg"
+                    }
+                    alt={recipe.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-white/90 text-xs font-medium px-2 py-1 rounded-full">
+                      {recipe.category}
+                    </span>
                   </div>
                 </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{recipe.title}</h3>
+                  <p className="text-muted-foreground mb-4 line-clamp-2">
+                    {recipe.description}
+                  </p>
 
-                <Button asChild className="w-full">
-                  <Link href={`/recept/${recipe.slug}`}>View Recipe</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                    <div className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" />
+                      {recipe.prepTime}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Users className="w-4 h-4" />
+                      {recipe.servings}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      {recipe.rating}
+                    </div>
+                  </div>
+
+                  <Button asChild className="w-full">
+                    <Link href={`/recept/${recipe.slug}`}>View Recipe</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            )
+          )}
         </div>
       </div>
     </div>

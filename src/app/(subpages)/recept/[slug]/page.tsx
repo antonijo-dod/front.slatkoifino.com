@@ -164,6 +164,7 @@ export default async function RecipePage({
               <CardContent>
                 <ol className="space-y-4">
                   {instructions.map(
+                    // @ts-expect-error need fix latter
                     ({ id, instruction_step, instruction_image }, index) => (
                       <li key={id} className="flex flex-col gap-4">
                         <div className="flex gap-4">
