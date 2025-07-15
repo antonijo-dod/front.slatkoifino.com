@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Heart, Menu } from "lucide-react";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,10 +29,14 @@ export default function RootLayout({
             <div className="flex items-center justify-between h-16">
               <Link
                 href="/"
-                className="flex items-center gap-2 font-bold text-xl"
+                className="flex items-center gap-2 font-bold relative text-xl"
               >
-                <Heart className="w-6 h-6 text-pink-500" />
-                Martini kolaci
+                <Image
+                  src="/images/slatkoifinologo.png"
+                  alt="Sweet Creations Logo"
+                  width={180}
+                  height={40}
+                />
               </Link>
 
               <div className="hidden md:flex items-center gap-6">
