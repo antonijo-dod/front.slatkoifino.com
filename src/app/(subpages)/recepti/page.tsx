@@ -114,7 +114,9 @@ export default async function RecipesPage() {
                 <div className="relative h-64">
                   <Image
                     src={
-                      recipe.featured_image?.formats.medium
+                      recipe.featured_image?.provider === "cloudinary"
+                        ? recipe.featured_image?.url
+                        : recipe.featured_image?.formats.medium
                         ? `${process.env.API_URL}${recipe.featured_image?.formats.medium.url}`
                         : "/images/placeholder.jpeg"
                     }
