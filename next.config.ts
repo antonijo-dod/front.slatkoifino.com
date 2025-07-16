@@ -12,8 +12,8 @@ const nextConfig: NextConfig = {
     ],
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "http://r8og4gk0g040kcgow48ooocg.91.99.119.7.sslip.io",
+        protocol: "http",
+        hostname: "r8og4gk0g040kcgow48ooocg.91.99.119.7.sslip.io",
         port: "1337",
         pathname: "/**",
       },
