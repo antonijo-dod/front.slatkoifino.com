@@ -100,7 +100,7 @@ export default async function RecipesPage() {
               id: number;
               title: string;
               description: string;
-              featured_image: { formats: { medium: { url: string } } };
+              featured_image: { url: string };
               prepTime: string;
               servings: number;
               rating: number;
@@ -114,11 +114,7 @@ export default async function RecipesPage() {
                 <div className="relative h-64">
                   <Image
                     src={
-                      recipe.featured_image?.provider === "cloudinary"
-                        ? recipe.featured_image?.url
-                        : recipe.featured_image?.formats.medium
-                        ? `${process.env.API_URL}${recipe.featured_image?.formats.medium.url}`
-                        : "/images/placeholder.jpeg"
+                      recipe.featured_image.url || "/images/placeholder.jpeg"
                     }
                     alt={recipe.title}
                     fill

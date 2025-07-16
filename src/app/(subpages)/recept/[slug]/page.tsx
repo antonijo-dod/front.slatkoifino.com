@@ -86,13 +86,7 @@ export default async function RecipePage({
         <div className="mb-8">
           <div className="relative h-96 rounded-lg overflow-hidden mb-6">
             <Image
-              src={
-                featured_image?.provider === "cloudinary"
-                  ? featured_image?.url
-                  : featured_image?.formats.large
-                  ? `${process.env.API_URL}${featured_image?.formats.large.url}`
-                  : "/images/placeholder.jpeg"
-              }
+              src={featured_image.url || "/images/placeholder.jpeg"}
               alt={title}
               fill
               className="object-cover"
@@ -181,11 +175,7 @@ export default async function RecipePage({
                           <div className="ml-12">
                             <div className="relative w-full h-56 flex-shrink-0">
                               <Image
-                                src={
-                                  featured_image?.provider === "cloudinary"
-                                    ? featured_image?.url
-                                    : `${process.env.API_URL}${featured_image?.formats.large.url}`
-                                }
+                                src={featured_image?.url}
                                 alt={`Step ${index + 1} image`}
                                 fill
                                 className="object-cover rounded"
