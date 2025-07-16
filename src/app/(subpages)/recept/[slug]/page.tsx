@@ -86,7 +86,7 @@ export default async function RecipePage({
         <div className="mb-8">
           <div className="relative h-96 rounded-lg overflow-hidden mb-6">
             <Image
-              src={featured_image.url || "/images/placeholder.jpeg"}
+              src={featured_image?.url || "/images/placeholder.jpeg"}
               alt={title}
               fill
               className="object-cover"

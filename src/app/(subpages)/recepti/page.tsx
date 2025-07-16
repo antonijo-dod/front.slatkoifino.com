@@ -114,7 +114,7 @@ export default async function RecipesPage() {
                 <div className="relative h-64">
                   <Image
                     src={
-                      recipe.featured_image.url || "/images/placeholder.jpeg"
+                      recipe.featured_image?.url || "/images/placeholder.jpeg"
                     }
                     alt={recipe.title}
                     fill
