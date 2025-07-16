@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
       "192.168.8.122",
       "res.cloudinary.com",
     ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
   typescript: {
     // Ignore TypeScript errors during build
