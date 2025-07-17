@@ -10,7 +10,6 @@ export default async function RecipePage({
   params: { slug: string };
 }) {
   const { slug } = await params;
-  console.log("🚀 ~ slug:", slug);
   const article = await fetch(
     `${process.env.API_URL}/api/articles?populate=*&filters[slug][$eq]=${slug}`
   );
@@ -34,30 +33,6 @@ export default async function RecipePage({
   );
   const { data: recipe } = await instructionsUrl.json();
   const instructions = recipe[0]?.instructions;
-  console.log("🚀 ~ instructions:", instructions);
-
-  // Use Promise.all to make both requests at the same time
-  // const [articleRes, instructionsRes] = await Promise.all([
-  //   // `${process.env.API_URL}/api/articles?populate=*&filters[slug][$eq]=${slug}`,
-  //   `${process.env.API_URL}/api/articles?filters[slug][$eq]=${slug}&populate[instructions][populate]=*`,
-  // ]);
-  // console.log("🚀 ~ articleRes:", articleRes);
-
-  // const finalRecipe = {
-  //   ...articleRes.data[0].attributes,
-  //   id: articleRes.data[0].id,
-  //   instructions: instructionsRes.data[0].attributes.instructions, // Get instructions from the second call
-  // };
-
-  // const {
-  //   title,
-  //   description,
-  //   featured_image,
-  //   time_to_prepare,
-  //   portions,
-  //   difficulty,
-  //   instructions: instructionsResponse,
-  // } = finalRecipe;
 
   if (!data) {
     return (
