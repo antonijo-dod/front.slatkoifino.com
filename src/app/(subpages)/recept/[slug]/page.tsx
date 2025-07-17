@@ -38,7 +38,7 @@ export default async function RecipePage({
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Recipe not found</h1>
+          <h1 className="text-2xl font-bold mb-4">Recept nije pronadem</h1>
           <Button asChild>
             <Link href="/recepti">Nazad na recepte</Link>
           </Button>
@@ -112,17 +112,17 @@ export default async function RecipePage({
           <div className="lg:col-span-1">
             <Card>
               <CardHeader>
-                <CardTitle>Ingredients</CardTitle>
+                <CardTitle>Sastojci</CardTitle>
               </CardHeader>
               <CardContent>
-                {/* <ul className="space-y-2">
+                <ul className="space-y-2">
                   {recipe.ingredients.map((ingredient, index) => (
                     <li key={index} className="flex items-start gap-2">
                       <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
                       <span className="text-sm">{ingredient}</span>
                     </li>
                   ))}
-                </ul> */}
+                </ul>
               </CardContent>
             </Card>
           </div>
@@ -131,7 +131,7 @@ export default async function RecipePage({
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
-                <CardTitle>Instructions</CardTitle>
+                <CardTitle>Koraci</CardTitle>
               </CardHeader>
               <CardContent>
                 <ol className="space-y-4">

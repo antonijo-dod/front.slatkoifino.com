@@ -72,7 +72,6 @@ export default async function RecipesPage() {
   const res = await fetch(`${process.env.API_URL}/api/articles?populate=*`);
   const { data } = await res.json();
 
-  console.log("🚀 ~ HomePage ~ data:", data);
   const allRecipes = data || [];
 
   return (
@@ -80,9 +79,10 @@ export default async function RecipesPage() {
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">All Recipes</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Sve recepti</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Browse our complete collection of delicious cake recipes
+            Pretrazi sve recepte i pronadji inspiraciju za svoj sljedeci
+            slatkis.
           </p>
 
           {/* Search Bar */}
@@ -148,7 +148,7 @@ export default async function RecipesPage() {
                   </div>
 
                   <Button asChild className="w-full">
-                    <Link href={`/recept/${recipe.slug}`}>View Recipe</Link>
+                    <Link href={`/recept/${recipe.slug}`}>Pogledaj recept</Link>
                   </Button>
                 </CardContent>
               </Card>
