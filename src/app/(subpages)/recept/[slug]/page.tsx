@@ -34,6 +34,7 @@ export default async function RecipePage({
   );
   const { data: recipe } = await instructionsUrl.json();
   const instructions = recipe[0]?.instructions;
+  console.log("🚀 ~ instructions:", instructions);
 
   // Use Promise.all to make both requests at the same time
   // const [articleRes, instructionsRes] = await Promise.all([
@@ -175,7 +176,7 @@ export default async function RecipePage({
                           <div className="ml-12">
                             <div className="relative w-full h-56 flex-shrink-0">
                               <Image
-                                src={featured_image?.url}
+                                src={instruction_image?.url}
                                 alt={`Step ${index + 1} image`}
                                 fill
                                 className="object-cover rounded"
