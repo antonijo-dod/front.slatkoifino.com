@@ -69,7 +69,7 @@ import { Clock, Users, Star, Search } from "lucide-react";
 // ];
 
 export default async function RecipesPage() {
-  const res = await fetch(`${process.env.API_URL}/api/articles?populate=*`);
+  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`);
   const { data } = await res.json();
 
   const allRecipes = data || [];
@@ -100,7 +100,8 @@ export default async function RecipesPage() {
               id: number;
               title: string;
               description: string;
-              featured_image: { url: string };
+              card_image: { url: string };
+              cover_image: { url: string };
               prepTime: string;
               servings: number;
               rating: number;
@@ -113,9 +114,7 @@ export default async function RecipesPage() {
               >
                 <div className="relative h-64">
                   <Image
-                    src={
-                      recipe.featured_image?.url || "/images/placeholder.jpeg"
-                    }
+                    src={recipe.cover_image?.url || "/images/placeholder.jpeg"}
                     alt={recipe.title}
                     fill
                     className="object-cover"

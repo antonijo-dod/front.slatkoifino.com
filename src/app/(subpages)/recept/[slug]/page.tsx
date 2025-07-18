@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Users, Star, ArrowLeft, Heart, Share2 } from "lucide-react";
+import { Clock, Users, ArrowLeft, Heart, Share2 } from "lucide-react";
 
 export default async function RecipePage({
   params,
@@ -11,7 +11,7 @@ export default async function RecipePage({
 }) {
   const { slug } = await params;
   const article = await fetch(
-    `${process.env.API_URL}/api/articles?populate=*&filters[slug][$eq]=${slug}`
+    `${process.env.API_URL}/api/recipes?populate=*&filters[slug][$eq]=${slug}`
   );
   const { data } = await article.json();
 
@@ -20,16 +20,17 @@ export default async function RecipePage({
   const {
     title,
     description,
-    featured_image,
-    time_to_prepare,
+    cover_image,
+    cook_time,
     portions,
     difficulty,
+    ingredients,
   } = post;
 
   // // GET recipe instructions
 
   const instructionsUrl = await fetch(
-    `${process.env.API_URL}/api/articles?filters[slug][$eq]=${slug}&populate[instructions][populate]=*`
+    `${process.env.API_URL}/api/recipes?filters[slug][$eq]=${slug}&populate[instructions][populate]=*`
   );
   const { data: recipe } = await instructionsUrl.json();
   const instructions = recipe[0]?.instructions;
@@ -62,7 +63,7 @@ export default async function RecipePage({
         <div className="mb-8">
           <div className="relative h-96 rounded-lg overflow-hidden mb-6">
             <Image
-              src={featured_image?.url || "/images/placeholder.jpeg"}
+              src={cover_image?.url || "/images/placeholder.jpeg"}
               alt={title}
               fill
               className="object-cover"
@@ -89,21 +90,20 @@ export default async function RecipePage({
           <div className="flex flex-wrap gap-6 text-sm">
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              <span className="font-medium">Prep:</span> {time_to_prepare}
+              <span className="font-medium">Vrijeme pecenja:</span> {cook_time}
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              <span className="font-medium">Cook:</span> {difficulty}
+              <span className="font-medium">Tezina:</span> {difficulty}
             </div>
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4" />
-              <span className="font-medium">Serves:</span> {portions}
+              <span className="font-medium">Komada:</span> {portions}
             </div>
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-              {/* TODO: Add difcutly instead */}
               <span className="font-medium">5</span>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -116,12 +116,31 @@ export default async function RecipePage({
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
-                  {recipe.ingredients.map((ingredient, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
-                      <span className="text-sm">{ingredient}</span>
-                    </li>
-                  ))}
+                  {ingredients.map(
+                    ({
+                      id,
+                      name,
+                      quantity,
+                      unit,
+                    }: {
+                      id: number;
+                      name: string;
+                      quantity?: number;
+                      unit?: string;
+                    }) => (
+                      <li key={id} className="flex items-start gap-2">
+                        <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
+                        <span className="text-sm">
+                          {name}
+                          {quantity && unit ? " - " : ""}
+                          {/* Display quantity and unit only if they exist */}
+                          {quantity}
+                          {quantity && unit ? " " : ""}
+                          {unit}
+                        </span>
+                      </li>
+                    )
+                  )}
                 </ul>
               </CardContent>
             </Card>
