@@ -2,10 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, Users, Star } from "lucide-react";
+import { Clock, Users } from "lucide-react";
 
 export default async function RecipesPage() {
-  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`);
+  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`, {
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+    },
+  });
   const { data } = await res.json();
 
   const allRecipes = data || [];

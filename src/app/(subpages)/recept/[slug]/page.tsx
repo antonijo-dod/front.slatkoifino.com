@@ -11,7 +11,12 @@ export default async function RecipePage({
 }) {
   const { slug } = await params;
   const article = await fetch(
-    `${process.env.API_URL}/api/recipes?populate=*&filters[slug][$eq]=${slug}`
+    `${process.env.API_URL}/api/recipes?populate=*&filters[slug][$eq]=${slug}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    }
   );
   const { data } = await article.json();
 
@@ -28,7 +33,11 @@ export default async function RecipePage({
   } = post;
 
   // Get all recipes
-  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`);
+  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`, {
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+    },
+  });
   const { data: allRecipes } = await res.json();
 
   // // Get all recipes except the current one
@@ -42,7 +51,12 @@ export default async function RecipePage({
   // // GET recipe instructions
 
   const instructionsUrl = await fetch(
-    `${process.env.API_URL}/api/recipes?filters[slug][$eq]=${slug}&populate[instructions][populate]=*`
+    `${process.env.API_URL}/api/recipes?filters[slug][$eq]=${slug}&populate[instructions][populate]=*`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    }
   );
   const { data: recipe } = await instructionsUrl.json();
   const instructions = recipe[0]?.instructions;

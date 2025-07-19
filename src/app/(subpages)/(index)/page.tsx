@@ -6,7 +6,11 @@ import { Clock, Users, Star } from "lucide-react";
 
 export default async function HomePage() {
   // Get featured recipes from API
-  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`);
+  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`, {
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+    },
+  });
   const { data: allRecipes } = await res.json();
 
   return (
