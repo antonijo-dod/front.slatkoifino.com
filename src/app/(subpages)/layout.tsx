@@ -26,10 +26,10 @@ export default function RootLayout({
               className="flex items-center gap-2 font-bold relative text-xl"
             >
               <Image
-                src="/images/slatkoifinologo.png"
+                src="/images/slatkoIfino-logo.png"
                 alt="Sweet Creations Logo"
-                width={180}
-                height={40}
+                width={100}
+                height={30}
               />
             </Link>
 
@@ -79,7 +79,7 @@ export default function RootLayout({
                 className="flex items-center gap-2 font-bold text-xl mb-4"
               >
                 <Image
-                  src="/images/slatkoifinologo.png"
+                  src="/images/slatkoIfino-logo.png"
                   alt="Sweet Creations Logo"
                   width={180}
                   height={40}

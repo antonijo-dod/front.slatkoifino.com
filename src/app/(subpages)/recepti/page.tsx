@@ -4,69 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, Users, Star } from "lucide-react";
 
-// const allRecipes = [
-//   {
-//     id: 1,
-//     title: "Classic Chocolate Cake",
-//     description: "Rich, moist chocolate cake with silky chocolate ganache",
-//     image: "/placeholder.svg?height=300&width=400",
-//     prepTime: "45 min",
-//     servings: 8,
-//     rating: 4.9,
-//     category: "Chocolate",
-//   },
-//   {
-//     id: 2,
-//     title: "Vanilla Cupcakes",
-//     description: "Light and fluffy vanilla cupcakes with buttercream frosting",
-//     image: "/placeholder.svg?height=300&width=400",
-//     prepTime: "30 min",
-//     servings: 12,
-//     rating: 4.8,
-//     category: "Cupcakes",
-//   },
-//   {
-//     id: 3,
-//     title: "Red Velvet Cake",
-//     description: "Classic red velvet with cream cheese frosting",
-//     image: "/placeholder.svg?height=300&width=400",
-//     prepTime: "60 min",
-//     servings: 10,
-//     rating: 4.9,
-//     category: "Classic",
-//   },
-//   {
-//     id: 4,
-//     title: "Lemon Drizzle Cake",
-//     description: "Zesty lemon cake with sweet lemon glaze",
-//     image: "/placeholder.svg?height=300&width=400",
-//     prepTime: "50 min",
-//     servings: 8,
-//     rating: 4.7,
-//     category: "Citrus",
-//   },
-//   {
-//     id: 5,
-//     title: "Strawberry Shortcake",
-//     description: "Fresh strawberries with fluffy sponge and whipped cream",
-//     image: "/placeholder.svg?height=300&width=400",
-//     prepTime: "40 min",
-//     servings: 6,
-//     rating: 4.8,
-//     category: "Fruit",
-//   },
-//   {
-//     id: 6,
-//     title: "Carrot Cake",
-//     description: "Spiced carrot cake with cream cheese frosting and walnuts",
-//     image: "/placeholder.svg?height=300&width=400",
-//     prepTime: "55 min",
-//     servings: 10,
-//     rating: 4.6,
-//     category: "Spiced",
-//   },
-// ];
-
 export default async function RecipesPage() {
   const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`);
   const { data } = await res.json();
@@ -78,7 +15,7 @@ export default async function RecipesPage() {
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Sve recepti</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Svi recepti</h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
             Pretrazi sve recepte i pronadji inspiraciju za svoj sljedeci
             slatkis.
