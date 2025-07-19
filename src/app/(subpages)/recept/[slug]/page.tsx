@@ -1,8 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata, ResolvingMetadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Users, ArrowLeft, Heart, Share2 } from "lucide-react";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+  parent: ResolvingMetadata;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await fetch(
+    `${process.env.API_URL}/api/recipes?populate=*&filters[slug][$eq]=${slug}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+    }
+  );
+  const { data } = await article.json();
+
+  const post = data[0] || {};
+
+  const { title, description, seo_title, seo_description } = post;
+  return {
+    title: seo_title || title,
+    description: seo_description || description,
+  };
+}
 
 export default async function RecipePage({
   params,

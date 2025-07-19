@@ -1,11 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, Star } from "lucide-react";
 
+export const metadata: Metadata = {
+  title: "Slatko i fino - Pocetna",
+  description: "Najbolji recepti za kolače i torte",
+};
+
 export default async function HomePage() {
   // Get featured recipes from API
+
   const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`, {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,

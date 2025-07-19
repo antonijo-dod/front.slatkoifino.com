@@ -1,15 +1,8 @@
 import type React from "react";
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Image from "next/image";
-
-export const metadata: Metadata = {
-  title: "Sweet Creations - Delicious Cake Recipes",
-  description:
-    "Discover amazing cake recipes made with love. From classic chocolate to creative flavors.",
-};
 
 export default function RootLayout({
   children,
