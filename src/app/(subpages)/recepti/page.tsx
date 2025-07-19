@@ -76,10 +76,11 @@ export default async function RecipesPage() {
                       <Users className="w-4 h-4" />
                       {recipe.servings}
                     </div>
-                    <div className="flex items-center gap-1">
+                    {/* TODO: See later what to do with this */}
+                    {/* <div className="flex items-center gap-1">
                       <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                       {recipe.rating}
-                    </div>
+                    </div> */}
                   </div>
 
                   <Button asChild className="w-full">
