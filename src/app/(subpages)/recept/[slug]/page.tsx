@@ -27,6 +27,18 @@ export default async function RecipePage({
     ingredients,
   } = post;
 
+  // Get all recipes
+  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`);
+  const { data: allRecipes } = await res.json();
+
+  // // Get all recipes except the current one
+  const filteredRecipes = allRecipes.filter(
+    (recipe: { slug: string }) => recipe.slug !== slug
+  );
+
+  // Get the last 3 recipes, except the current one
+  const relatedRecipes = filteredRecipes.slice(0, 3);
+
   // // GET recipe instructions
 
   const instructionsUrl = await fetch(
@@ -189,9 +201,9 @@ export default async function RecipePage({
 
         {/* Related Recipes */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-6">You might also like</h2>
+          <h2 className="text-2xl font-bold mb-6">Mozda ce vam se svidjeti</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            {[2, 3, 4].map((id) => (
+            {/* {[2, 3, 4].map((id) => (
               <Card
                 key={id}
                 className="overflow-hidden hover:shadow-lg transition-shadow"
@@ -211,7 +223,40 @@ export default async function RecipePage({
                   </Button>
                 </CardContent>
               </Card>
-            ))}
+            ))} */}
+            {relatedRecipes.map(
+              (recipe: {
+                id: number;
+                title: string;
+                description: string;
+                cover_image: { url: string };
+                slug: string;
+              }) => (
+                <Card
+                  key={recipe.id}
+                  className="overflow-hidden hover:shadow-lg transition-shadow"
+                >
+                  <div className="relative h-48">
+                    <Image
+                      src={
+                        recipe.cover_image?.url || "/images/placeholder.jpeg"
+                      }
+                      alt={recipe.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold mb-2">{recipe.title}</h3>
+                    <Button asChild size="sm" className="w-full">
+                      <Link href={`/recept/${recipe.slug}`}>
+                        Pogledaj recept
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              )
+            )}
           </div>
         </div>
       </div>
