@@ -2,7 +2,7 @@ import type React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Heart, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import Image from "next/image";
 
 export const metadata: Metadata = {
