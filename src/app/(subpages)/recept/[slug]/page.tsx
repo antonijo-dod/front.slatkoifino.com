@@ -26,8 +26,8 @@ export async function generateMetadata({
 
   const { title, description, seo_title, seo_description } = post;
   return {
-    title: seo_title || title,
-    description: seo_description || description,
+    title: `Slatko i fino - ${seo_title || title}`,
+    description: `Slatko i fino - ${seo_description || description}`,
   };
 }
 
