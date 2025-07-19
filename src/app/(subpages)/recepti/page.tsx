@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Clock, Users, Star, Search } from "lucide-react";
+import { Clock, Users, Star } from "lucide-react";
 
 // const allRecipes = [
 //   {
@@ -85,11 +84,11 @@ export default async function RecipesPage() {
             slatkis.
           </p>
 
-          {/* Search Bar */}
-          <div className="relative max-w-md mx-auto">
+          {/* TODO: Search Bar */}
+          {/* <div className="relative max-w-md mx-auto">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input placeholder="Search recipes..." className="pl-10" />
-          </div>
+          </div> */}
         </div>
 
         {/* Recipe Grid */}

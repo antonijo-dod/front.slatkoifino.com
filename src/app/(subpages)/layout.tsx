@@ -46,18 +46,18 @@ export default function RootLayout({
               >
                 Svi recepti
               </Link>
-              <Link
+              {/* <Link
                 href="/about"
                 className="text-sm font-medium hover:text-pink-600 transition-colors"
               >
                 About
-              </Link>
-              <Link
+              </Link> */}
+              {/* <Link
                 href="/kontakt"
                 className="text-sm font-medium hover:text-pink-600 transition-colors"
               >
                 Kontakt
-              </Link>
+              </Link> */}
             </div>
 
             <Button variant="ghost" size="icon" className="md:hidden">
@@ -78,24 +78,28 @@ export default function RootLayout({
                 href="/"
                 className="flex items-center gap-2 font-bold text-xl mb-4"
               >
-                <Heart className="w-6 h-6 text-pink-500" />
-                Sweet Creations
+                <Image
+                  src="/images/slatkoifinologo.png"
+                  alt="Sweet Creations Logo"
+                  width={180}
+                  height={40}
+                />
               </Link>
               <p className="text-muted-foreground mb-4">
-                Bringing sweetness to your kitchen with carefully crafted cake
-                recipes made with love.
+                Donosi slast u vasu kuhinju s pazljivo osmisljenim receptima
+                kolaca napravljenim s ljubavlju.
               </p>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Quick Links</h3>
+              <h3 className="font-semibold mb-4">Brzi linkovi</h3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
                     href="/"
                     className="text-muted-foreground hover:text-foreground"
                   >
-                    Home
+                    Pocetna
                   </Link>
                 </li>
                 <li>
@@ -106,7 +110,7 @@ export default function RootLayout({
                     Svi recepti
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     href="/about"
                     className="text-muted-foreground hover:text-foreground"
@@ -121,13 +125,13 @@ export default function RootLayout({
                   >
                     Kontakt
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Categories</h3>
-              <ul className="space-y-2 text-sm">
+              <h3 className="font-semibold mb-4">Kategorije</h3>
+              {/* <ul className="space-y-2 text-sm">
                 <li>
                   <Link
                     href="/recept?category=chocolate"
@@ -160,13 +164,13 @@ export default function RootLayout({
                     Cupcakes
                   </Link>
                 </li>
-              </ul>
+              </ul> */}
             </div>
           </div>
 
           <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
             <p>
-              &copy; 2024 Sweet Creations. Made with ❤️ for baking enthusiasts.
+              &copy; 2025 Slatko i fino. Napravljeno sa ❤️ za ljubitelje kuhanja
             </p>
           </div>
         </div>
