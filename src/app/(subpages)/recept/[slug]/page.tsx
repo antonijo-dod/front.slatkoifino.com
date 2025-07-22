@@ -5,6 +5,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Users, ArrowLeft, Heart, Share2 } from "lucide-react";
 
+export async function generateStaticParams() {
+  const res = await fetch(`${process.env.API_URL}/api/recipes`, {
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+    },
+  });
+  const { data: recipes } = await res.json();
+
+  return recipes.map((recipe: { slug: string }) => ({
+    slug: recipe.slug,
+  }));
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -17,6 +30,9 @@ export async function generateMetadata({
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+      next: {
+        revalidate: 3600, // Revalidate every hour
       },
     }
   );
@@ -43,6 +59,9 @@ export default async function RecipePage({
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
+      next: {
+        revalidate: 3600, // Revalidate every hour
+      },
     }
   );
   const { data } = await article.json();
@@ -64,6 +83,9 @@ export default async function RecipePage({
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
+    next: {
+      revalidate: 3600, // Revalidate every hour
+    },
   });
   const { data: allRecipes } = await res.json();
 
@@ -82,6 +104,9 @@ export default async function RecipePage({
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+      next: {
+        revalidate: 3600, // Revalidate every hour
       },
     }
   );
