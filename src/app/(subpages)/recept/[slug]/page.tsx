@@ -24,7 +24,7 @@ export async function generateMetadata({
   params: { slug: string };
   parent: ResolvingMetadata;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   const article = await fetch(
     `${process.env.API_URL}/api/recipes?populate=*&filters[slug][$eq]=${slug}`,
     {
@@ -52,7 +52,7 @@ export default async function RecipePage({
 }: {
   params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params;
   const article = await fetch(
     `${process.env.API_URL}/api/recipes?populate=*&filters[slug][$eq]=${slug}`,
     {
