@@ -56,6 +56,12 @@ export default async function HomePage() {
           </p>
         </div>
 
+        {allRecipes.length === 0 && (
+          <div className="text-center">
+            <h3>Trenutno nema dodanih recepata</h3>
+            <p>Provjerite ponovno za nekoliko trenutaka</p>
+          </div>
+        )}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {allRecipes
             .slice(0, 5)
@@ -88,7 +94,7 @@ export default async function HomePage() {
                     <h3 className="text-xl font-semibold mb-2">
                       {recipe.title}
                     </h3>
-                    <p className="text-muted-foreground mb-4">
+                    <p className="text-muted-foreground mb-4 line-clamp-2">
                       {recipe.description}
                     </p>
 

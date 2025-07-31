@@ -38,6 +38,12 @@ export default async function RecipesPage() {
           </div> */}
         </div>
 
+        {allRecipes.length === 0 && (
+          <div className="text-center">
+            <h3>Trenutno nema objavljenih recepata</h3>
+            <p>Provjerite ponovno za nekoliko trenutaka</p>
+          </div>
+        )}
         {/* Recipe Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* @ts-expected-ignore */}
