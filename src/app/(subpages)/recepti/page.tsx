@@ -40,7 +40,7 @@ export default async function RecipesPage() {
 
         {allRecipes.length === 0 && (
           <div className="text-center">
-            <h3>Trenutno nema dodanih recepata</h3>
+            <h3>Trenutno nema objavljenih recepata</h3>
             <p>Provjerite ponovno za nekoliko trenutaka</p>
           </div>
         )}
