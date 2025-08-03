@@ -154,14 +154,15 @@ export default async function RecipePage({
               <h1 className="text-4xl font-bold mb-2">{title}</h1>
               <p className="text-lg text-muted-foreground">{description}</p>
             </div>
-            <div className="flex gap-2">
+            {/* TODO: Add later if needed */}
+            {/* <div className="flex gap-2">
               <Button variant="outline" size="icon">
                 <Heart className="w-4 h-4" />
               </Button>
               <Button variant="outline" size="icon">
                 <Share2 className="w-4 h-4" />
               </Button>
-            </div>
+            </div> */}
           </div>
 
           {/* Recipe Stats */}
