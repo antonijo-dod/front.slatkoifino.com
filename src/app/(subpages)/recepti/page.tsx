@@ -15,6 +15,7 @@ export default async function RecipesPage() {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
+    next: { revalidate: 60 },
   });
   const { data } = await res.json();
 
