@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Metadata, ResolvingMetadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Users, ArrowLeft, Heart, Share2 } from "lucide-react";
+import { Clock, Users, ArrowLeft} from "lucide-react";
 
 export async function generateStaticParams() {
   const res = await fetch(`${process.env.API_URL}/api/recipes`, {
