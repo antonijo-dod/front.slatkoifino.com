@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Metadata, ResolvingMetadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Users, ArrowLeft} from "lucide-react";
+import { Clock, Users, ArrowLeft } from "lucide-react";
 
 export async function generateStaticParams() {
   const res = await fetch(`${process.env.API_URL}/api/recipes`, {
@@ -210,16 +210,11 @@ export default async function RecipePage({
                       <li key={id} className="flex items-start gap-2">
                         <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
                         <span className="text-sm">
-                          {/* First show quantitity, unit and than name text */}
-                          {quantity ? (
-                            <>
-                              <span className="font-medium">
-                                {quantity}
-                                {unit ? ` ${unit}` : ""}
-                              </span>{" "}
-                              - {name}
-                            </>
-                          ) : null}
+                          <span className="font-medium">
+                            {quantity}
+                            {unit ? ` ${unit}` : ""}
+                          </span>{" "}
+                          - {name}
                         </span>
                       </li>
                     )
