@@ -17,9 +17,9 @@ const nextConfig: NextConfig = {
         port: "",
       },
       {
-        protocol: "http", // Or 'https' if your Strapi instance uses it
-        hostname: "r8og4gk0g040kcgow48ooocg.91.99.119.7.sslip.io", // The domain from your API_URL
-        port: "1337",
+        protocol: "https", // Or 'https' if your Strapi instance uses it
+        hostname: "api.slatkoifino.com", // The domain from your API_URL
+        port: "",
       },
     ],
   },
