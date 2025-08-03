@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { href: "/", label: "Pocetna" },
+  { href: "/", label: "Početna" },
   { href: "/recepti", label: "Svi recepti" },
   // { href: "/about", label: "About" },
   // { href: "/kontakt", label: "Kontakt" },
