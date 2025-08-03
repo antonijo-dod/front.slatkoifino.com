@@ -210,12 +210,16 @@ export default async function RecipePage({
                       <li key={id} className="flex items-start gap-2">
                         <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
                         <span className="text-sm">
-                          {name}
-                          {quantity && unit ? " - " : ""}
-                          {/* Display quantity and unit only if they exist */}
-                          {quantity}
-                          {quantity && unit ? " " : ""}
-                          {unit}
+                          {/* First show quantitity, unit and than name text */}
+                          {quantity ? (
+                            <>
+                              <span className="font-medium">
+                                {quantity}
+                                {unit ? ` ${unit}` : ""}
+                              </span>{" "}
+                              - {name}
+                            </>
+                          ) : null}
                         </span>
                       </li>
                     )
