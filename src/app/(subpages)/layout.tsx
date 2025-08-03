@@ -1,4 +1,7 @@
+"use client";
+
 import type React from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
@@ -9,6 +12,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <>
       <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
@@ -53,10 +58,39 @@ export default function RootLayout({
               </Link> */}
             </div>
 
-            <Button variant="ghost" size="icon" className="md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
               <Menu className="w-5 h-5" />
+              <span className="sr-only">Toggle menu</span>
             </Button>
           </div>
+          {isMenuOpen && (
+            <div
+              id="mobile-menu"
+              className="md:hidden flex flex-col gap-4 py-4 border-t"
+            >
+              <Link
+                href="/"
+                className="text-sm font-medium hover:text-pink-600 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Pocetna
+              </Link>
+              <Link
+                href="/recepti"
+                className="text-sm font-medium hover:text-pink-600 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Svi recepti
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
 
