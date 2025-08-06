@@ -106,7 +106,7 @@ export default async function HomePage() {
                       </div>
                       <div className="flex items-center gap-1">
                         <Users className="w-4 h-4" />
-                        {recipe.servings}
+                        {recipe.servings} serviranja
                       </div>
                       <div className="flex items-center gap-1">
                         <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
