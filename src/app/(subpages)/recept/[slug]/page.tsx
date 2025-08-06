@@ -173,7 +173,7 @@ export default async function RecipePage({
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              <span className="font-medium">Teżina:</span> {difficulty}
+              <span className="font-medium">Težina:</span> {difficulty}
             </div>
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4" />
