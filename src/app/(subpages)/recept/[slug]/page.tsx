@@ -117,7 +117,7 @@ export default async function RecipePage({
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Recept nije pronadem</h1>
+          <h1 className="text-2xl font-bold mb-4">Recept nije pronaden</h1>
           <Button asChild>
             <Link href="/recepti">Nazad na recepte</Link>
           </Button>
@@ -169,11 +169,11 @@ export default async function RecipePage({
           <div className="flex flex-wrap gap-6 text-sm">
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              <span className="font-medium">Vrijeme pecenja:</span> {cook_time}
+              <span className="font-medium">Vrijeme pečenja:</span> {cook_time}
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              <span className="font-medium">Tezina:</span> {difficulty}
+              <span className="font-medium">Teżina:</span> {difficulty}
             </div>
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4" />
@@ -267,7 +267,7 @@ export default async function RecipePage({
 
         {/* Related Recipes */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold mb-6">Mozda ce vam se svidjeti</h2>
+          <h2 className="text-2xl font-bold mb-6">Mozda će vam se svidjeti</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {/* {[2, 3, 4].map((id) => (
               <Card
