@@ -131,7 +131,7 @@ export default async function HomePage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">O meni</h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            Dobrodosli u moju slatku kuhinju! Ovdje cete pronači pažljivo
+            Dobrodošli u moju slatku kuhinju! Ovdje ćete pronači pažljivo
             osmišljene recepte kolača koji donose radost svakoj proslavi. Od
             klasičnih favorita do kreativnih novih okusa, svaki recept je
             testiran s ljubavlju i osmišljen da stvori lijepe uspomene oko vaših
