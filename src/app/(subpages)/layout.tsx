@@ -36,7 +36,7 @@ export default function RootLayout({
                 href="/"
                 className="text-sm font-medium hover:text-pink-600 transition-colors"
               >
-                Pocetna
+                Početna
               </Link>
               <Link
                 href="/recepti"
@@ -80,7 +80,7 @@ export default function RootLayout({
                 className="text-sm font-medium hover:text-pink-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Pocetna
+                Početna
               </Link>
               <Link
                 href="/recepti"
@@ -113,8 +113,8 @@ export default function RootLayout({
                 />
               </Link>
               <p className="text-muted-foreground mb-4">
-                Donosi slast u vasu kuhinju s pazljivo osmisljenim receptima
-                kolaca napravljenim s ljubavlju.
+                Donosi slast u vasu kuhinju s pažljivo osmišljenim receptima
+                kolača napravljenim s ljubavlju.
               </p>
             </div>
 
@@ -126,7 +126,7 @@ export default function RootLayout({
                     href="/"
                     className="text-muted-foreground hover:text-foreground"
                   >
-                    Pocetna
+                    Početna
                   </Link>
                 </li>
                 <li>

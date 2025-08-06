@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, Star } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Slatko i fino - Pocetna",
+  title: "Slatko i fino - Početna",
   description: "Najbolji recepti za kolače i torte",
 };
 
@@ -36,7 +36,7 @@ export default async function HomePage() {
         <div className="relative z-20 text-center text-white max-w-4xl mx-auto px-4">
           <h1 className="text-5xl md:text-7xl font-bold mb-6">Slatko I Fino</h1>
           <p className="text-xl md:text-2xl mb-8 opacity-90">
-            Otkrij ukusne recepte kolaca i torti napravljene s ljubavlju
+            Otkrij ukusne recepte kolača i torti napravljene s ljubavlju
           </p>
           <Button
             asChild
@@ -53,7 +53,7 @@ export default async function HomePage() {
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">Posljednji recepti</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Nasi najbolji recepti kolaca, savrseni za svaku priliku
+            Naši najbolji recepti kolača, savršeni za svaku priliku
           </p>
         </div>
 
@@ -106,7 +106,7 @@ export default async function HomePage() {
                       </div>
                       <div className="flex items-center gap-1">
                         <Users className="w-4 h-4" />
-                        {recipe.servings} servings
+                        {recipe.servings} serviranja
                       </div>
                       <div className="flex items-center gap-1">
                         <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
@@ -131,10 +131,10 @@ export default async function HomePage() {
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">O meni</h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            Dobrodosli u moju slatku kuhinju! Ovdje cete pronaci pazljivo
-            osmisljene recepte kolaca koji donose radost svakoj proslavi. Od
-            klasicnih favorita do kreativnih novih okusa, svaki recept je
-            testiran s ljubavlju i osmišljen da stvori lijepe uspomene oko vasih
+            Dobrodošli u moju slatku kuhinju! Ovdje ćete pronači pažljivo
+            osmišljene recepte kolača koji donose radost svakoj proslavi. Od
+            klasičnih favorita do kreativnih novih okusa, svaki recept je
+            testiran s ljubavlju i osmišljen da stvori lijepe uspomene oko vaših
             stolova.
           </p>
         </div>
