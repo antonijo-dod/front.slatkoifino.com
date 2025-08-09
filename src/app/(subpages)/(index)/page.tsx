@@ -85,7 +85,7 @@ export default async function HomePage() {
                 >
                   <div className="relative h-64">
                     <Image
-                      src={recipe.card_image.url || "/placeholder.svg"}
+                      src={recipe.card_image?.url || "/images/placeholder.jpeg"}
                       alt={recipe.title}
                       fill
                       className="object-cover"
