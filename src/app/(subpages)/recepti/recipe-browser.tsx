@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
 import { fetchRecipes, Recipe, PaginationMeta } from "./actions";
 import { useDebounce } from "@/hooks/use-debounce";
@@ -35,7 +35,7 @@ export function RecipeBrowser() {
   };
 
   // Function to load subsequent pages for infinite scroll
-  const loadMoreRecipes = async () => {
+  const loadMoreRecipes = useCallback(async () => {
     if (isLoadingMore || !meta) return;
     setIsLoadingMore(true);
 
@@ -51,7 +51,7 @@ export function RecipeBrowser() {
       setMeta(newMeta);
     }
     setIsLoadingMore(false);
-  };
+  }, [isLoadingMore, meta, debouncedSearchQuery]);
 
   // Effect for handling debounced search
   useEffect(() => {
@@ -65,7 +65,7 @@ export function RecipeBrowser() {
     if (inView && hasMorePages && !isLoading) {
       loadMoreRecipes();
     }
-  }, [inView, hasMorePages, isLoading]);
+  }, [inView, hasMorePages, isLoading, loadMoreRecipes]);
 
   return (
     <>
