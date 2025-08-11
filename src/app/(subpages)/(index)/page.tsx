@@ -78,50 +78,56 @@ export default async function HomePage() {
                 rating: number;
                 category: string;
                 slug: string;
-              }) => (
-                <Card
-                  key={recipe.id}
-                  className="overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <div className="relative h-64">
-                    <Image
-                      src={recipe.card_image?.url || "/images/placeholder.jpeg"}
-                      alt={recipe.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">
-                      {recipe.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-4 line-clamp-2">
-                      {recipe.description}
-                    </p>
-
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {recipe.prepTime}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Users className="w-4 h-4" />
-                        {recipe.servings} serviranja
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        {recipe.rating}
-                      </div>
+              }) => {
+                const coverImageUrl = recipe.cover_image?.url?.replace(
+                  "/upload/",
+                  "/upload/h_256/"
+                );
+                return (
+                  <Card
+                    key={recipe.id}
+                    className="overflow-hidden hover:shadow-lg transition-shadow"
+                  >
+                    <div className="relative h-64">
+                      <Image
+                        src={coverImageUrl || "/images/placeholder.jpeg"}
+                        alt={recipe.title}
+                        fill
+                        className="object-cover"
+                      />
                     </div>
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-semibold mb-2">
+                        {recipe.title}
+                      </h3>
+                      <p className="text-muted-foreground mb-4 line-clamp-2">
+                        {recipe.description}
+                      </p>
 
-                    <Button asChild className="w-full">
-                      <Link href={`/recept/${recipe.slug}`}>
-                        Pogledaj recept
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              )
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          {recipe.prepTime}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Users className="w-4 h-4" />
+                          {recipe.servings} serviranja
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          {recipe.rating}
+                        </div>
+                      </div>
+
+                      <Button asChild className="w-full">
+                        <Link href={`/recept/${recipe.slug}`}>
+                          Pogledaj recept
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              }
             )}
         </div>
       </section>
