@@ -12,7 +12,6 @@ type RecipeCardProps = {
 };
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
-  console.log("🚀 ~ RecipeCard ~ recipe:", recipe);
 
   // Image should be max 720 * 256
   // Image link looks like https://res.cloudinary.com/ddgc86byi/image/upload/v1754150232/thumbnail_krafne_c9fb2eb91b.jpg
