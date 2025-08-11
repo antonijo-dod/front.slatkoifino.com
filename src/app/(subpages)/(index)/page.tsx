@@ -79,7 +79,7 @@ export default async function HomePage() {
                 category: string;
                 slug: string;
               }) => {
-                const coverImageUrl = recipe.cover_image?.url?.replace(
+                const cardImageUrl = recipe.cover_image?.url?.replace(
                   "/upload/",
                   "/upload/h_256/"
                 );
