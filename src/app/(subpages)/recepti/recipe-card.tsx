@@ -12,11 +12,21 @@ type RecipeCardProps = {
 };
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
+
+  // Image should be max 720 * 256
+  // Image link looks like https://res.cloudinary.com/ddgc86byi/image/upload/v1754150232/thumbnail_krafne_c9fb2eb91b.jpg
+  // Need to insert after /upload/ image dimensions w_7,h_300
+
+  const coverImageUrl = recipe.cover_image?.url?.replace(
+    "/upload/",
+    "/upload/h_256/"
+  );
+
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
       <div className="relative h-64">
         <Image
-          src={recipe.cover_image?.url || "/images/placeholder.jpeg"}
+          src={coverImageUrl || "/images/placeholder.jpeg"}
           alt={recipe.title}
           fill
           className="object-cover"
