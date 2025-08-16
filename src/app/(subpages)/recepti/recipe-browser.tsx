@@ -16,10 +16,14 @@ type Props = {
 
 export function RecipeBrowser({ initialRecipes, initialMeta, currentPage }: Props) {
   
-  // For infinite scroll mode (search + initial load)
+  // In-memory cache for prefetched pages
+  const [pageCache, setPageCache] = useState<Map<number, Recipe[]>>(
+    new Map([[currentPage, initialRecipes]])
+  );
+  
+  // Current displayed recipes and meta
   const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes);
   const [meta, setMeta] = useState<PaginationMeta | null>(initialMeta);
-  const [loadedPages, setLoadedPages] = useState(new Set([currentPage]));
   
   // Search state
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,21 +41,19 @@ export function RecipeBrowser({ initialRecipes, initialMeta, currentPage }: Prop
 
   // Prefetch next page in background
   const prefetchNextPage = useCallback(async (pageNum: number) => {
-    if (loadedPages.has(pageNum) || isPrefetching || isSearchMode) return;
+    if (pageCache.has(pageNum) || isPrefetching || isSearchMode) return;
     
     setIsPrefetching(true);
     try {
       const { recipes: nextRecipes } = await fetchRecipes(pageNum, 9);
       if (nextRecipes.length > 0) {
-        setLoadedPages(prev => new Set([...prev, pageNum]));
-        // Store in memory for instant loading
-        sessionStorage.setItem(`recipes_page_${pageNum}`, JSON.stringify(nextRecipes));
+        setPageCache(prev => new Map(prev).set(pageNum, nextRecipes));
       }
     } catch (error) {
       console.error('Prefetch failed:', error);
     }
     setIsPrefetching(false);
-  }, [loadedPages, isPrefetching, isSearchMode]);
+  }, [pageCache, isPrefetching, isSearchMode]);
 
   // Load more recipes (from cache or fetch)
   const loadMoreRecipes = useCallback(async () => {
@@ -61,21 +63,20 @@ export function RecipeBrowser({ initialRecipes, initialMeta, currentPage }: Prop
     const nextPage = meta.pagination.page + 1;
     
     try {
-      // Try to load from cache first
-      const cached = sessionStorage.getItem(`recipes_page_${nextPage}`);
       let newRecipes: Recipe[];
       
-      if (cached && loadedPages.has(nextPage)) {
-        newRecipes = JSON.parse(cached);
+      // Check cache first
+      if (pageCache.has(nextPage)) {
+        newRecipes = pageCache.get(nextPage)!;
       } else {
         const result = await fetchRecipes(nextPage, 9);
         newRecipes = result.recipes;
         setMeta(result.meta);
+        setPageCache(prev => new Map(prev).set(nextPage, newRecipes));
       }
       
       if (newRecipes.length > 0) {
         setRecipes(prev => [...prev, ...newRecipes]);
-        setLoadedPages(prev => new Set([...prev, nextPage]));
         
         // Prefetch next page
         if (nextPage < (meta?.pagination.pageCount || 0)) {
@@ -87,7 +88,7 @@ export function RecipeBrowser({ initialRecipes, initialMeta, currentPage }: Prop
     }
     
     setIsLoadingMore(false);
-  }, [isLoadingMore, meta, isSearchMode, loadedPages, prefetchNextPage]);
+  }, [isLoadingMore, meta, isSearchMode, pageCache, prefetchNextPage]);
 
   // Search function
   const searchForRecipes = async (query: string) => {
@@ -98,7 +99,6 @@ export function RecipeBrowser({ initialRecipes, initialMeta, currentPage }: Prop
       const { recipes: newRecipes, meta: newMeta } = await fetchRecipes(1, 9, query);
       setRecipes(newRecipes);
       setMeta(newMeta);
-      setLoadedPages(new Set([1]));
     } catch (error) {
       console.error('Search failed:', error);
     }
@@ -113,11 +113,10 @@ export function RecipeBrowser({ initialRecipes, initialMeta, currentPage }: Prop
       setRecipes(initialRecipes);
       setMeta(initialMeta);
       setIsSearchMode(false);
-      setLoadedPages(new Set([currentPage]));
       return;
     }
     searchForRecipes(debouncedSearchQuery);
-  }, [debouncedSearchQuery, initialRecipes, initialMeta, currentPage]);
+  }, [debouncedSearchQuery, initialRecipes, initialMeta]);
 
   // Infinite scroll trigger
   useEffect(() => {
@@ -128,24 +127,10 @@ export function RecipeBrowser({ initialRecipes, initialMeta, currentPage }: Prop
 
   // Initial prefetch of page 2
   useEffect(() => {
-    if (
-      !isSearchMode &&
-      currentPage === 1 &&
-      (initialMeta?.pagination.pageCount ?? 0) > 1
-    ) {
+    if (!isSearchMode && currentPage === 1 && (initialMeta?.pagination.pageCount ?? 0) > 1) {
       setTimeout(() => prefetchNextPage(2), 1000);
     }
   }, [currentPage, initialMeta, isSearchMode, prefetchNextPage]);
-
-  // Handle browser back/forward for pagination URLs
-  useEffect(() => {
-    const handlePopState = () => {
-      window.location.reload(); // Simple approach for pagination URLs
-    };
-    
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
 
   return (
     <>
@@ -168,7 +153,6 @@ export function RecipeBrowser({ initialRecipes, initialMeta, currentPage }: Prop
           </div>
         ) : recipes.length > 0 ? (
           <>
-            {/* Recipe Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {recipes.map((recipe, index) => (
                 <RecipeCard 
@@ -178,7 +162,6 @@ export function RecipeBrowser({ initialRecipes, initialMeta, currentPage }: Prop
               ))}
             </div>
 
-            {/* Load More Trigger */}
             {hasMorePages && (
               <div ref={ref} className="flex justify-center items-center p-4 mt-8">
                 {isLoadingMore && <Loader2 className="w-8 h-8 animate-spin" />}
@@ -188,7 +171,6 @@ export function RecipeBrowser({ initialRecipes, initialMeta, currentPage }: Prop
               </div>
             )}
 
-            {/* End Message */}
             {!hasMorePages && (
               <p className="text-center text-muted-foreground mt-8">
                 {isSearchMode ? "Nema više rezultata." : "Stigli ste do kraja."}
