@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { fetchRecipes, Recipe, PaginationMeta } from "./actions";
 import { RecipeCard } from "./recipe-card";
@@ -57,10 +57,16 @@ export function RecipeList({ initialRecipes, initialMeta, currentPage }: RecipeL
   // Track loaded pages to prevent duplicate loading
   const [loadedPages, setLoadedPages] = useState<Set<number>>(new Set([currentPage]));
 
+  // Use a ref to track active requests and prevent duplicate calls
+  const activeRequestRef = useRef<boolean>(false);
+  const lastScrollPositionRef = useRef<number>(0);
+
   // Load more recipes (from cache or fetch)
   const loadMoreRecipes = useCallback(async () => {
-    if (isLoadingMore || !meta || isSearchMode) return;
+    // Multiple protection layers against repeated calls
+    if (isLoadingMore || !meta || isSearchMode || activeRequestRef.current) return;
     
+    // Get next page from current meta state
     const nextPage = meta.pagination.page + 1;
     
     // Prevent loading the same page twice
@@ -69,6 +75,11 @@ export function RecipeList({ initialRecipes, initialMeta, currentPage }: RecipeL
       return;
     }
     
+    // Record current scroll position to detect rapid scrolling
+    lastScrollPositionRef.current = window.scrollY;
+    
+    // Set active request flag to prevent data races
+    activeRequestRef.current = true;
     console.log(`Loading page ${nextPage}, current loaded pages: ${[...loadedPages].join(', ')}`);
     setIsLoadingMore(true);
     
@@ -116,9 +127,11 @@ export function RecipeList({ initialRecipes, initialMeta, currentPage }: RecipeL
       }
     } catch (error) {
       console.error('Load more failed:', error);
+    } finally {
+      // Always reset flags when done, regardless of success/failure
+      setIsLoadingMore(false);
+      activeRequestRef.current = false;
     }
-    
-    setIsLoadingMore(false);
   }, [isLoadingMore, meta, isSearchMode, pageCache, loadedPages, prefetchNextPage]);
 
   // Search function
@@ -154,10 +167,27 @@ export function RecipeList({ initialRecipes, initialMeta, currentPage }: RecipeL
     searchForRecipes(debouncedSearchQuery);
   }, [debouncedSearchQuery, initialRecipes, initialMeta, currentPage]);
 
-  // Infinite scroll trigger
+  // Track when the inView status changes
+  const prevInViewRef = useRef(false);
+  
+  // Improved infinite scroll trigger with more aggressive protection
   useEffect(() => {
-    if (inView && hasMorePages && !isLoading && !isLoadingMore) {
-      loadMoreRecipes();
+    // Only run when inView transitions from false to true (entered viewport)
+    const isNewlyInView = inView && !prevInViewRef.current;
+    prevInViewRef.current = inView;
+    
+    // Only trigger when element newly enters view and we have more pages to load
+    if (isNewlyInView && hasMorePages && !isLoading && !isLoadingMore && !activeRequestRef.current) {
+      // Use debounce to prevent multiple rapid triggers
+      const timer = setTimeout(() => {
+        // Double-check we're still not loading anything
+        if (!activeRequestRef.current) {
+          console.log('Triggering load more from scroll effect');
+          loadMoreRecipes();
+        }
+      }, 500); // Longer debounce time
+      
+      return () => clearTimeout(timer);
     }
   }, [inView, hasMorePages, isLoading, isLoadingMore, loadMoreRecipes]);
 

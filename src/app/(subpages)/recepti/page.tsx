@@ -40,22 +40,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RecipesPage({
-  searchParams,
-}: {
-  searchParams?: { page?: string };
-}) {
-  // Get current page from URL or default to 1
-  const currentPage = Math.max(1, Number(searchParams?.page || "1"));
-  const pageSize = 9; // 9 recipes per page
+// This is the safest and simplest approach for handling Next.js Server Components
+export default async function RecipesPage() {
+  // Always fetch the first page - this is guaranteed safe
+  const pageSize = 9;
+  const { recipes: initialRecipes, meta: initialMeta } = await fetchRecipes(1, pageSize);
   
-  // Server-render the initial recipes for SEO
-  const { recipes: initialRecipes, meta: initialMeta } = await fetchRecipes(currentPage, pageSize);
-
+  // Always use page 1 for the initial render
+  // The client component can handle pagination via client-side navigation
+  const currentPage = 1;
+  
   // Generate structured data for recipes
   const recipeListStructuredData = generateRecipeListStructuredData(
     initialRecipes,
-    `https://slatkoifino.com/recepti${currentPage > 1 ? `?page=${currentPage}` : ''}`
+    `https://slatkoifino.com/recepti`
   );
   const breadcrumbsStructuredData = generateBreadcrumbsStructuredData();
 
