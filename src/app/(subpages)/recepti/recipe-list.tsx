@@ -181,7 +181,7 @@ export function RecipeList({ initialRecipes, initialMeta, currentPage }: RecipeL
       const timer = setTimeout(() => {
         // Double-check we're still not loading anything
         if (!activeRequestRef.current) {
-          console.log('Triggering load more from scroll effect');
+          
           loadMoreRecipes();
         }
       }, 500); // Longer debounce time
