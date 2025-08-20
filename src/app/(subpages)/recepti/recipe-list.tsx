@@ -79,7 +79,6 @@ export function RecipeList({ initialRecipes, initialMeta, currentPage }: RecipeL
     
     // Set active request flag to prevent data races
     activeRequestRef.current = true;
-    console.log(`Loading page ${nextPage}, current loaded pages: ${[...loadedPages].join(', ')}`);
     setIsLoadingMore(true);
     
     try {
