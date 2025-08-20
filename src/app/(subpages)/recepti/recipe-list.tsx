@@ -71,7 +71,6 @@ export function RecipeList({ initialRecipes, initialMeta, currentPage }: RecipeL
     
     // Prevent loading the same page twice
     if (loadedPages.has(nextPage)) {
-      console.log(`Page ${nextPage} already loaded, skipping`);
       return;
     }
     
