@@ -117,7 +117,6 @@ export function RecipeList({ initialRecipes, initialMeta, currentPage }: RecipeL
         
         // Mark this page as loaded
         setLoadedPages(prev => new Set([...prev, nextPage]));
-        console.log(`Added page ${nextPage} to loaded pages, now: ${[...Array.from(loadedPages), nextPage].join(', ')}`);
         
         // Prefetch next page if available
         if (nextPage < (newMeta?.pagination.pageCount || 0)) {
