@@ -139,13 +139,11 @@ export default async function RecipePage({
 
         {/* Recipe Header */}
         <div className="mb-8">
-          <div className="relative h-96 rounded-lg overflow-hidden mb-6">
-            <Image
+          <div className="relative rounded-lg overflow-hidden mb-6">
+            <img
               src={cover_image?.url || "/images/placeholder.jpeg"}
               alt={title}
-              fill
-              className="object-cover"
-              priority
+              className="object-cover w-full mx-auto h-full aspect-video"
             />
           </div>
 
