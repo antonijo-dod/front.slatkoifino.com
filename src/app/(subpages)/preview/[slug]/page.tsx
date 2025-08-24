@@ -17,9 +17,6 @@ export default async function RecipePreviewPage({
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
-      next: {
-        revalidate: 3600, // Revalidate every hour
-      },
     }
   );
   const { data } = await article.json();
@@ -41,9 +38,6 @@ export default async function RecipePreviewPage({
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
-    next: {
-      revalidate: 3600, // Revalidate every hour
-    },
   });
   const { data: allRecipes } = await res.json();
 
@@ -62,9 +56,6 @@ export default async function RecipePreviewPage({
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-      },
-      next: {
-        revalidate: 3600, // Revalidate every hour
       },
     }
   );
