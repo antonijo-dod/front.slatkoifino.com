@@ -65,7 +65,7 @@ export default async function HomePage() {
         )}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {allRecipes
-            .slice(0, 5)
+            .slice(0, 6)
             .map(
               (recipe: {
                 id: number;
@@ -79,14 +79,14 @@ export default async function HomePage() {
                 category: string;
                 slug: string;
               }) => {
-                const cardImageUrl = recipe.cover_image?.url?.replace(
+                const cardImageUrl = recipe.card_image?.url?.replace(
                   "/upload/",
                   "/upload/h_256/"
                 );
                 return (
                   <Card
                     key={recipe.id}
-                    className="overflow-hidden hover:shadow-lg transition-shadow"
+                    className="overflow-hidden hover:shadow-lg transition-shadow pt-0"
                   >
                     <div className="relative h-64">
                       <Image

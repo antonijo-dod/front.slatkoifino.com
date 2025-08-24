@@ -18,7 +18,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
   );
 
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col pt-0">
       <div className="relative h-64">
         <Image
           src={cardImageUrl || "/images/placeholder.jpeg"}
@@ -26,11 +26,12 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           fill
           className="object-cover"
         />
-        <div className="absolute top-4 left-4">
+        {/* TODO: Add category here */}
+        {/* <div className="absolute top-4 left-4">
           <span className="bg-white/90 text-xs font-medium px-2 py-1 rounded-full">
             {recipe.category}
           </span>
-        </div>
+        </div> */}
       </div>
       <CardContent className="p-6 flex flex-col flex-grow">
         <h3 className="text-xl font-semibold mb-2">{recipe.title}</h3>
