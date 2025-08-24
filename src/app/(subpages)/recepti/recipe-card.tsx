@@ -12,7 +12,7 @@ type RecipeCardProps = {
 };
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
-  const cardImageUrl = recipe.cover_image?.url?.replace(
+  const cardImageUrl = recipe.card_image?.url?.replace(
     "/upload/",
     "/upload/h_256/"
   );
