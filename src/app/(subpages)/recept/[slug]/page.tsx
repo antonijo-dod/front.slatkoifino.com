@@ -6,14 +6,30 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Users, ArrowLeft } from "lucide-react";
 
 export async function generateStaticParams() {
-  const res = await fetch(`${process.env.API_URL}/api/recipes`, {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
-    },
-  });
-  const { data: recipes } = await res.json();
+  const allRecipes = [];
+  let page = 1;
+  let pageCount = 1;
 
-  return recipes.map((recipe: { slug: string }) => ({
+  do {
+    const res = await fetch(
+      `${process.env.API_URL}/api/recipes?pagination[page]=${page}&pagination[pageSize]=100`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+        },
+      }
+    );
+    const { data: recipes, meta } = await res.json();
+    if (meta && meta.pagination) {
+      pageCount = meta.pagination.pageCount;
+    }
+    if (recipes) {
+      allRecipes.push(...recipes);
+    }
+    page++;
+  } while (page <= pageCount);
+
+  return allRecipes.map((recipe: { slug: string }) => ({
     slug: recipe.slug,
   }));
 }
