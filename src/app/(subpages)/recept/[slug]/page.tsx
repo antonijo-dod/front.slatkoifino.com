@@ -311,7 +311,7 @@ export default async function RecipePage({
                 id: number;
                 title: string;
                 description: string;
-                cover_images: { url: string };
+                card_image: { url: string };
                 slug: string;
               }) => (
                 <Card
@@ -320,9 +320,7 @@ export default async function RecipePage({
                 >
                   <div className="relative h-48">
                     <Image
-                      src={
-                        recipe.cover_images?.url || "/images/placeholder.jpeg"
-                      }
+                      src={recipe.card_image?.url || "/images/placeholder.jpeg"}
                       alt={recipe.title}
                       fill
                       className="object-cover"
