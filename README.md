@@ -1,4 +1,4 @@
-# This is frontend repo for [slatkoifino.com](https://slatkoifino.com)
+# This is frontend for [slatkoifino.com](https://slatkoifino.com)
 
 ## Getting Started
 
