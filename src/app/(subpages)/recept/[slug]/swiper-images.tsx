@@ -22,7 +22,10 @@ const SwiperImages = ({ images }: { images: StrapiImage[] }) => {
         className="mySwiper"
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide
+            key={image.id || index}
+            className="rounded-lg overflow-hidden"
+          >
             <img
               src={image.url}
               alt={image.name}

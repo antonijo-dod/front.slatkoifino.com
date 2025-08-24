@@ -14,7 +14,6 @@ export async function generateStaticParams() {
   });
 
   const { data: recipes } = await res.json();
-  console.log("🚀 ~ generateStaticParams ~ data:", recipes);
 
   return recipes.map((recipe: { slug: string }) => ({
     slug: recipe.slug,
