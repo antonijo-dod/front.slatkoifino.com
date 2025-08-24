@@ -4,6 +4,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Users, ArrowLeft } from "lucide-react";
+import SwiperImages from "./swiper-images";
 
 export async function generateStaticParams() {
   const res = await fetch(`${process.env.API_URL}/api/recipes`, {
@@ -11,6 +12,7 @@ export async function generateStaticParams() {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
   });
+
   const { data: recipes } = await res.json();
 
   return recipes.map((recipe: { slug: string }) => ({
@@ -71,7 +73,7 @@ export default async function RecipePage({
   const {
     title,
     description,
-    cover_image,
+    cover_images,
     cook_time,
     portions,
     difficulty,
@@ -140,11 +142,12 @@ export default async function RecipePage({
         {/* Recipe Header */}
         <div className="mb-8">
           <div className="relative rounded-lg overflow-hidden mb-6">
-            <img
+            <SwiperImages images={cover_images} />
+            {/* <img
               src={cover_image?.url || "/images/placeholder.jpeg"}
               alt={title}
               className="object-cover w-full mx-auto h-full aspect-video"
-            />
+            /> */}
           </div>
 
           <div className="flex justify-between items-start mb-4">
