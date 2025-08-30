@@ -15,7 +15,7 @@ export default async function RecipePreviewPage({
     `${process.env.API_URL}/api/recipes?populate=*&status=draft&filters[slug][$eq]=${slug}`,
     {
       headers: {
-        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN_PREVIEW}`,
       },
     }
   );
