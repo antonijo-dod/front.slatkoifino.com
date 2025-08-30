@@ -34,7 +34,7 @@ export default async function RecipePreviewPage({
   } = post;
 
   // Get all recipes
-  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`, {
+  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*&status=draft`, {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
@@ -52,7 +52,7 @@ export default async function RecipePreviewPage({
   // // GET recipe instructions
 
   const instructionsUrl = await fetch(
-    `${process.env.API_URL}/api/recipes?filters[slug][$eq]=${slug}&populate[instructions][populate]=*`,
+    `${process.env.API_URL}/api/recipes?filters[slug][$eq]=${slug}&status=draft&populate[instructions][populate]=*`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
