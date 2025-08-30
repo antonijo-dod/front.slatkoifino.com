@@ -12,7 +12,7 @@ export default async function RecipePreviewPage({
 }) {
   const { slug } = await params;
   const article = await fetch(
-    `${process.env.API_URL}/api/recipes?populate=*&filters[slug][$eq]=${slug}`,
+    `${process.env.API_URL}/api/recipes?populate=*&status=draft&filters[slug][$eq]=${slug}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
