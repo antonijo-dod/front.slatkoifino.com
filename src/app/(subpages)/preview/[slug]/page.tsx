@@ -12,7 +12,7 @@ export default async function RecipePreviewPage({
 }) {
   const { slug } = await params;
   const article = await fetch(
-    `${process.env.API_URL}/api/recipes?populate=*&status=draft&filters[slug][$eq]=${slug}`,
+    `${process.env.API_URL}/api/recipes?populate=all&status=draft&filters[slug][$eq]=${slug}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN_PREVIEW}`,
@@ -30,7 +30,7 @@ export default async function RecipePreviewPage({
     cook_time,
     portions,
     difficulty,
-    ingredients,
+    ingredients_group,
   } = post;
 
   // Get all recipes
@@ -143,19 +143,38 @@ export default async function RecipePreviewPage({
               </CardHeader>
               <CardContent>
                 <ul className="space-y-2">
-                  {ingredients.map(
-                    ({
-                      id,
-                      name,
-                      quantity,
-                      unit,
-                    }: {
-                      id: number;
-                      name: string;
-                      quantity?: number;
-                      unit?: string;
-                    }) => (
-                      <li key={id} className="flex items-start gap-2">
+                 {
+                   ingredients_group.length > 0 ? ingredients_group.map(
+                     ({
+                       id,
+                       group_name,
+                       ingredients
+                     }: {
+                       id: number;
+                       group_name?: string;
+                       ingredients: {
+                         id: number;
+                         name: string;
+                         quantity?: number;
+                         unit?: string;
+                       }[];
+                     }) => (
+                      <ul key={id}>
+                        <li>{group_name}</li>
+                        {
+                          ingredients.map(
+                            ({
+                              id,
+                              name,
+                              quantity,
+                              unit,
+                            }: {
+                              id: number;
+                              name: string;
+                              quantity?: number;
+                              unit?: string;
+                            }) => (
+                               <li key={id} className="flex items-start gap-2">
                         <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
                         <span className="text-sm">
                           <span className="font-medium">
@@ -165,8 +184,13 @@ export default async function RecipePreviewPage({
                           - {name}
                         </span>
                       </li>
-                    )
-                  )}
+                            )
+                          )
+                        }
+                      </ul>
+                     )
+                   ) : <p>Nema sastojaka</p>
+                 }
                 </ul>
               </CardContent>
             </Card>
@@ -217,27 +241,6 @@ export default async function RecipePreviewPage({
         <div className="mt-12">
           <h2 className="text-2xl font-bold mb-6">Mozda će vam se svidjeti</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            {/* {[2, 3, 4].map((id) => (
-              <Card
-                key={id}
-                className="overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <div className="relative h-48">
-                  <Image
-                    src="/placeholder.svg?height=200&width=300"
-                    alt="Related recipe"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold mb-2">Related Recipe {id}</h3>
-                  <Button asChild size="sm" className="w-full">
-                    <Link href={`/recipe/${id}`}>View Recipe</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))} */}
             {relatedRecipes.map(
               (recipe: {
                 id: number;
