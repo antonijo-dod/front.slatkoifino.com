@@ -32,6 +32,7 @@ export default async function RecipePreviewPage({
     cook_time,
     portions,
     difficulty,
+    ingredients,
     ingredients_group,
   } = post;
 
@@ -144,6 +145,36 @@ export default async function RecipePreviewPage({
                 <CardTitle>Sastojci</CardTitle>
               </CardHeader>
               <CardContent>
+                {
+                  ingredients_group.length === 0 && ingredients && ingredients.length > 0 && (
+                    <ul className="space-y-2">
+                      {ingredients.map(
+                        ({
+                          id,
+                          name,
+                          quantity,
+                          unit,
+                        }: {
+                          id: number;
+                          name: string;
+                          quantity?: number;
+                          unit?: string;
+                        }) => (
+                          <li key={id} className="flex items-start gap-2">
+                            <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
+                            <span className="text-sm">
+                              <span className="font-medium">
+                                {quantity}
+                                {unit ? ` ${unit}` : ""}
+                              </span>{" "}
+                              - {name}
+                            </span>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  )
+                }
                 <ul className="space-y-2">
                   {
                     ingredients_group.length > 0 ? ingredients_group.map(
@@ -177,16 +208,20 @@ export default async function RecipePreviewPage({
                               }) => (
                                 <Ingredient
                                   key={id}
-                                  name={name}
                                   quantity={quantity}
                                   unit={unit}
+                                  name={name}
                                 />
                               )
                             )
                           }
                         </IngredientGroup>
                       )
-                    ) : <p>Nema sastojaka</p>
+                    ) : (
+                      // TODO: Add message if no ingredients
+                      // <p>Nema sastojaka</p>
+                      <></>
+                    )
                   }
                 </ul>
               </CardContent>
