@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Users, ArrowLeft } from "lucide-react";
 import SwiperImages from "./swiper-images";
+import { Ingredient } from "./ingredient";
+import { IngredientGroup } from "./ingredient-group"
 
 export async function generateStaticParams() {
   const allRecipes = [];
@@ -71,7 +73,7 @@ export default async function RecipePage({
 }) {
   const { slug } = await params;
   const article = await fetch(
-    `${process.env.API_URL}/api/recipes?populate=all&filters[slug][$eq]=${slug}`,
+    `${process.env.API_URL}/api/recipes?pLevel=3&filters[slug][$eq]=${slug}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
@@ -96,7 +98,7 @@ export default async function RecipePage({
   } = post;
 
   // Get all recipes
-  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`, {
+  const res = await fetch(`${process.env.API_URL}/api/recipes?pLevel=5`, {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
@@ -210,57 +212,50 @@ export default async function RecipePage({
                 <CardTitle>Sastojci</CardTitle>
               </CardHeader>
               <CardContent>
-                  <ul className="space-y-2">
-                 {
-                   ingredients_group.length > 0 ? ingredients_group.map(
-                     ({
-                       id,
-                       group_name,
-                       ingredients
-                     }: {
-                       id: number;
-                       group_name?: string;
-                       ingredients: {
-                         id: number;
-                         name: string;
-                         quantity?: number;
-                         unit?: string;
-                       }[];
-                     }) => (
-                        <ul key={id} className="space-y-2">
-                        <li>{group_name}</li>
-                         <ul key={id} className="space-y-2">
-                        {
-                          ingredients.map(
-                            ({
-                              id,
-                              name,
-                              quantity,
-                              unit,
-                            }: {
-                              id: number;
-                              name: string;
-                              quantity?: number;
-                              unit?: string;
-                            }) => (
-                               <li key={id} className="flex items-start gap-2">
-                                <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
-                                <span className="text-sm">
-                                  <span className="font-medium">
-                                    {quantity}
-                                    {unit ? ` ${unit}` : ""}
-                                  </span>{" "}
-                                  - {name}
-                                </span>
-                            </li>
+                <ul className="space-y-2">
+                  {
+                    ingredients_group.length > 0 ? ingredients_group.map(
+                      ({
+                        id,
+                        group_name,
+                        ingredients
+                      }: {
+                        id: number;
+                        group_name?: string;
+                        ingredients: {
+                          id: number;
+                          name: string;
+                          quantity?: number;
+                          unit?: string;
+                        }[];
+                      }) => (
+                        <IngredientGroup key={id} groupName={group_name}>
+                          {
+                            ingredients.map(
+                              ({
+                                id,
+                                name,
+                                quantity,
+                                unit,
+                              }: {
+                                id: number;
+                                name: string;
+                                quantity?: number;
+                                unit?: string;
+                              }) => (
+                                <Ingredient
+                                  key={id}
+                                  quantity={quantity}
+                                  unit={unit}
+                                  name={name}
+                                />
+                              )
                             )
-                          )
-                        }
-                       </ul>
-                      </ul>
-                     )
-                   ) : <p>Nema sastojaka</p>
-                 }
+                          }
+                        </IngredientGroup>
+                      )
+                    ) : <p>Nema sastojaka</p>
+                  }
                 </ul>
               </CardContent>
             </Card>
