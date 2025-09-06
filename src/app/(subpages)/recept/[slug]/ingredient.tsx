@@ -1,9 +1,6 @@
 import React from "react";
-import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
-export async function Ingredient({
+export function Ingredient({
   quantity,
   unit,
   name,
