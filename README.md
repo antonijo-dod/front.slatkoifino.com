@@ -1,6 +1,6 @@
 # This is frontend for [slatkoifino.com](https://slatkoifino.com)
 
-## Getting Started
+## Getting Started - updated version
 
 First, run the development server:
 
