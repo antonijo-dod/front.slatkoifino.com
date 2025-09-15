@@ -14,7 +14,7 @@ type RecipeCardProps = {
 export function RecipeCard({ recipe }: RecipeCardProps) {
   const cardImageUrl = recipe.card_image?.url?.replace(
     "/upload/",
-    "/upload/h_256/"
+    "/upload/h_512/"
   );
 
   return (
