@@ -4,7 +4,7 @@ import type React from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, Facebook } from "lucide-react";
 import Image from "next/image";
 
 export default function RootLayout({
@@ -157,7 +157,21 @@ export default function RootLayout({
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Kategorije</h3>
+              {/* Set facebook links */}
+              <div>
+                <h3 className="font-semibold mb-4">Društvene mreže</h3>
+                <div className="mt-4">
+                  <a
+                    href="https://www.facebook.com/groups/743893966260475"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                    className="w-8 h-8 rounded-full bg-pink-600 flex items-center justify-center text-white hover:bg-pink-700 transition-colors"
+                  >
+                    <Facebook className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
               {/* <ul className="space-y-2 text-sm">
                 <li>
                   <Link
