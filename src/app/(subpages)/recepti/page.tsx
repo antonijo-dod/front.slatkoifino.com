@@ -21,7 +21,6 @@ export default async function RecipesPage({ searchParams }: { searchParams: Prom
   const recipeResponse = await res.json();
 
   const currentPage = recipeResponse.meta.pagination.page;
-  const totalPages = recipeResponse.meta.pagination.pageCount;
   const pageCount = recipeResponse.meta.pagination.pageCount;
 
   return (
