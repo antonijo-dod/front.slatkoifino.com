@@ -6,13 +6,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 type PaginationProps = {
     currentPage: number;
     totalPages: number;
-    pageSize: number;
     pageCount: number;
 };
 
-export default function Pagination({ currentPage, totalPages, pageSize, pageCount }: PaginationProps) {
+export default function Pagination({ currentPage, totalPages, pageCount }: PaginationProps) {
     const searchParams = useSearchParams();
-    const basePath = searchParams.get('basePath') || '';
     const pathname = usePathname();
     const { replace } = useRouter();
 
@@ -31,10 +29,6 @@ export default function Pagination({ currentPage, totalPages, pageSize, pageCoun
         const delta = 1; // Number of pages to show on each side of current page
         const range = [];
         const rangeWithDots = [];
-
-        // For mobile: show fewer pages
-        const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-        const maxVisible = isMobile ? 3 : 5; // Show 3 pages on mobile, 5 on desktop
 
         for (
             let i = Math.max(2, currentPage - delta);

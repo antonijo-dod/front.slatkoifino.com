@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { RecipeBrowser } from "./recipe-browser"
 import { RecipeCard } from "./recipe-card";
 import Pagination from "./pagination";
 
@@ -12,8 +11,6 @@ export default async function RecipesPage({ searchParams }: { searchParams: Prom
 
   const params = await searchParams;
   const page = params.page ? parseInt(params.page as string, 10) : 1;
-  // Add query param handling if needed
-  const query = params.query || '';
 
   const res = await fetch(`${process.env.API_URL}/api/recipes?pLevel=3&sort=createdAt:desc&pagination[page]=${page}&pagination[pageSize]=12`, {
     headers: {
@@ -25,7 +22,6 @@ export default async function RecipesPage({ searchParams }: { searchParams: Prom
 
   const currentPage = recipeResponse.meta.pagination.page;
   const totalPages = recipeResponse.meta.pagination.pageCount;
-  const pageSize = recipeResponse.meta.pagination.pageSize;
   const pageCount = recipeResponse.meta.pagination.pageCount;
 
   return (
@@ -42,11 +38,12 @@ export default async function RecipesPage({ searchParams }: { searchParams: Prom
         {/* Recipes */}
         <div className="mt-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recipeResponse.data.map((recipe: any) => (
+            {/* @ts-expect-error Replace any with appropriate type */}
+            {recipeResponse.data.map((recipe) => (
               <RecipeCard key={recipe.id} recipe={recipe} />
             ))}
           </div>
-          <Pagination currentPage={currentPage} totalPages={totalPages} pageSize={pageSize} pageCount={pageCount} />
+          <Pagination currentPage={currentPage} totalPages={totalPages} pageCount={pageCount} />
         </div>
       </div>
     </div>
