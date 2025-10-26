@@ -1,6 +1,7 @@
 "use client";
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 type PaginationProps = {
     currentPage: number;
@@ -15,45 +16,129 @@ export default function Pagination({ currentPage, totalPages, pageSize, pageCoun
     const pathname = usePathname();
     const { replace } = useRouter();
 
-
     const handlePageChange = (page: number) => {
-        // Update the URL with the new page number while preserving other query parameters, and don't overwrite search query if present
-        // take existing search params
         const params = new URLSearchParams(searchParams);
-        // Copy existing query param if present
         const query = params.get('query');
         if (query) {
             params.set('query', query);
         }
         params.set('page', page.toString());
         replace(`${pathname}?${params.toString()}`);
-
-        // replace(`${pathname}?page=${page}`);
     };
 
-    return (
-        <div className="flex justify-center align-center mt-12 space-x-2">
-            <Button onClick={() => handlePageChange(currentPage - 1)} className="px-4 py-2 rounded disabled:opacity-50" disabled={currentPage === 1}>
-                Prethodno
-            </Button>
-            {/* Show first page always, and last page if there are set dots between */}
-            {Array.from({ length: pageCount }, (_, i) => (
-                // Show only first, last, current, and two pages before and after current
-                (i === 0 || i === pageCount - 1 || (i >= currentPage - 3 && i <= currentPage + 1)) ? (
-                    <Button onClick={() => handlePageChange(i + 1)} key={i} className={`px-4 py-2 hover:bg-pink-700 focus:bg-pink-600 cursor-pointer rounded ${currentPage === i + 1 ? 'bg-pink-500 hover:bg-pink-600 text-white' : ''}`}>
-                        {i + 1}
-                    </Button>
-                ) : (
-                    // Show dots if not already shown
-                    (i === currentPage - 4 || i === currentPage + 2) ? (
-                        <span key={i} className="px-4 py-2">...</span>
-                    ) : null
-                )
-            ))}
+    // Generate page numbers based on screen size
+    const getVisiblePages = () => {
+        const delta = 1; // Number of pages to show on each side of current page
+        const range = [];
+        const rangeWithDots = [];
 
-            <Button onClick={() => handlePageChange(currentPage + 1)} className="px-4 py-2 rounded disabled:opacity-50" disabled={currentPage === totalPages}>
-                Sljedeće
-            </Button>
+        // For mobile: show fewer pages
+        const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+        const maxVisible = isMobile ? 3 : 5; // Show 3 pages on mobile, 5 on desktop
+
+        for (
+            let i = Math.max(2, currentPage - delta);
+            i <= Math.min(pageCount - 1, currentPage + delta);
+            i++
+        ) {
+            range.push(i);
+        }
+
+        if (currentPage - delta > 2) {
+            rangeWithDots.push(1, '...');
+        } else {
+            rangeWithDots.push(1);
+        }
+
+        rangeWithDots.push(...range);
+
+        if (currentPage + delta < pageCount - 1) {
+            rangeWithDots.push('...', pageCount);
+        } else {
+            rangeWithDots.push(pageCount);
+        }
+
+        return rangeWithDots;
+    };
+
+    if (pageCount <= 1) return null;
+
+    return (
+        <div className="flex justify-center items-center mt-8 md:mt-12">
+            {/* Mobile-first layout */}
+            <div className="flex items-center space-x-1 md:space-x-2">
+                {/* Previous button */}
+                <Button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0 md:h-10 md:w-auto md:px-4 md:py-2"
+                    aria-label="Previous page"
+                >
+                    <ChevronLeft className="h-4 w-4" />
+                    <span className="hidden md:inline ml-2">Prethodno</span>
+                </Button>
+
+                {/* Mobile: Show only current page info */}
+                <div className="flex items-center md:hidden">
+                    <span className="px-3 py-1 text-sm text-muted-foreground">
+                        {currentPage} / {pageCount}
+                    </span>
+                </div>
+
+                {/* Desktop: Show page numbers */}
+                <div className="hidden md:flex items-center space-x-1">
+                    {getVisiblePages().map((page, index) => (
+                        <div key={index}>
+                            {page === '...' ? (
+                                <span className="px-3 py-2 text-muted-foreground">...</span>
+                            ) : (
+                                <Button
+                                    onClick={() => handlePageChange(page as number)}
+                                    variant={currentPage === page ? "default" : "outline"}
+                                    size="sm"
+                                    className={`h-10 w-10 ${currentPage === page
+                                        ? 'bg-pink-500 hover:bg-pink-600 text-white border-pink-500'
+                                        : 'hover:bg-pink-50 hover:border-pink-200'
+                                        }`}
+                                >
+                                    {page}
+                                </Button>
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+                {/* Next button */}
+                <Button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0 md:h-10 md:w-auto md:px-4 md:py-2"
+                    aria-label="Next page"
+                >
+                    <ChevronRight className="h-4 w-4" />
+                    <span className="hidden md:inline ml-2">Sljedeće</span>
+                </Button>
+            </div>
+
+            {/* Mobile: Jump to page input (optional) */}
+            <div className="md:hidden ml-4">
+                <select
+                    value={currentPage}
+                    onChange={(e) => handlePageChange(parseInt(e.target.value))}
+                    className="text-sm border rounded px-2 py-1 bg-background"
+                    aria-label="Jump to page"
+                >
+                    {Array.from({ length: pageCount }, (_, i) => (
+                        <option key={i + 1} value={i + 1}>
+                            Str. {i + 1}
+                        </option>
+                    ))}
+                </select>
+            </div>
         </div>
     );
 }
