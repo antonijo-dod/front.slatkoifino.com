@@ -5,21 +5,16 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 type PaginationProps = {
     currentPage: number;
-    totalPages: number;
     pageCount: number;
 };
 
-export default function Pagination({ currentPage, totalPages, pageCount }: PaginationProps) {
+export default function Pagination({ currentPage, pageCount }: PaginationProps) {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
 
     const handlePageChange = (page: number) => {
         const params = new URLSearchParams(searchParams);
-        const query = params.get('query');
-        if (query) {
-            params.set('query', query);
-        }
         params.set('page', page.toString());
         replace(`${pathname}?${params.toString()}`);
     };
@@ -107,7 +102,7 @@ export default function Pagination({ currentPage, totalPages, pageCount }: Pagin
                 {/* Next button */}
                 <Button
                     onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
+                    disabled={currentPage === pageCount}
                     variant="outline"
                     size="sm"
                     className="h-8 w-8 p-0 md:h-10 md:w-auto md:px-4 md:py-2"

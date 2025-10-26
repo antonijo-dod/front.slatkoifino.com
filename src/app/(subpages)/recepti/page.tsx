@@ -43,7 +43,7 @@ export default async function RecipesPage({ searchParams }: { searchParams: Prom
               <RecipeCard key={recipe.id} recipe={recipe} />
             ))}
           </div>
-          <Pagination currentPage={currentPage} totalPages={totalPages} pageCount={pageCount} />
+          <Pagination currentPage={currentPage} pageCount={pageCount} />
         </div>
       </div>
     </div>
