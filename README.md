@@ -2,7 +2,7 @@
 
 ## Getting Started - updated version
 
-Test 1
+Test 2
 
 First, run the development server:
 
