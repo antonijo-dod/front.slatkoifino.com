@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   // Get featured recipes from API
 
-  const res = await fetch(`${process.env.API_URL}/api/recipes?populate=*`, {
+  const res = await fetch(`${process.env.API_URL}/api/recipes?pLevel=3&sort=createdAt:desc&pagination[page]=1&pagination[pageSize]=6`, {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
     },
@@ -65,7 +65,6 @@ export default async function HomePage() {
         )}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {allRecipes
-            .slice(0, 6)
             .map(
               (recipe: {
                 id: number;
