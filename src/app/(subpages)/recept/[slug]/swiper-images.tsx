@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
+import Image from "next/image";
 import { StrapiImage } from "@/types/strapi-image";
 
 const SwiperImages = ({ images }: { images: StrapiImage[] }) => {
@@ -26,11 +27,13 @@ const SwiperImages = ({ images }: { images: StrapiImage[] }) => {
             key={image.id || index}
             className="rounded-lg overflow-hidden"
           >
-            <img
-              src={image.url}
-              alt={image.name}
-              className="object-cover aspect-4/3"
-            />
+            <div className="aspect-4/3">
+              <Image
+                src={image.url}
+                alt={image.name}
+                fill
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

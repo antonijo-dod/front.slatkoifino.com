@@ -4,8 +4,14 @@ import { useDebounce } from "@/hooks/use-debounce";
 import Link from "next/link";
 import { ROUTES } from "@/routes"
 
+type Recipe = {
+    id: number;
+    title: string;
+    slug: string;
+}
+
 export default function SearchDropdown() {
-    const [recipes, setRecipes] = useState<any[]>([]);
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [isSearching, setIsSearching] = useState(false);
     const debouncedSearch = useDebounce(searchQuery, 300);
