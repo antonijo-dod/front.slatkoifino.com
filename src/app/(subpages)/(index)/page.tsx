@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Users, Star } from "lucide-react";
-import SearchDropdown from "./SearchDropdown";
 
 export const metadata: Metadata = {
   title: "Slatko i fino - Početna",
@@ -39,14 +38,13 @@ export default async function HomePage() {
           <p className="text-xl md:text-2xl mb-8 opacity-90">
             Otkrij ukusne recepte kolača i torti napravljene s ljubavlju
           </p>
-          {/* <Button
+          <Button
             asChild
             size="lg"
             className="bg-pink-600 hover:bg-pink-700 text-lg px-8 py-3"
           >
             <Link href="/recepti">Otkrij recepte</Link>
-          </Button> */}
-          <SearchDropdown />
+          </Button>
         </div>
       </section>
 
