@@ -27,7 +27,7 @@ const SwiperImages = ({ images }: { images: StrapiImage[] }) => {
             key={image.id || index}
             className="rounded-lg overflow-hidden"
           >
-            <div className="aspect-4/3">
+            <div className="aspect-4/3 relative">
               <Image
                 src={image.url}
                 alt={image.name}
