@@ -10,6 +10,26 @@ type Recipe = {
     slug: string;
 }
 
+// Helper to escape special characters in a string for use in a RegExp
+const escapeRegExp = (value: string) =>
+    value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Function to highlight matching text
+const highlightText = (text: string, query: string) => {
+    if (!query.trim()) return text;
+
+    const escapedQuery = escapeRegExp(query);
+    const regex = new RegExp(`(${escapedQuery})`, 'gi');
+    const parts = text.split(regex);
+
+    return parts.map((part, index) => {
+        if (part.toLowerCase() === query.toLowerCase()) {
+            return <mark key={index} className="bg-purple-100 font-semibold">{part}</mark>;
+        }
+        return part;
+    });
+};
+
 export default function SearchDropdown() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
@@ -83,7 +103,11 @@ export default function SearchDropdown() {
                     ) : recipes.length > 0 ? (
                         <ul>
                             {recipes.map((recipe) => (
-                                <li key={recipe.id}><Link className="px-6 py-4 hover:bg-gray-100 cursor-pointer block" href={ROUTES.recipe(recipe.slug)}>{recipe.title}</Link></li>
+                                <li key={recipe.id}>
+                                    <Link className="px-6 py-4 hover:bg-gray-100 cursor-pointer block" href={ROUTES.recipe(recipe.slug)}>
+                                        {highlightText(recipe.title, debouncedSearch)}
+                                    </Link>
+                                </li>
                             ))}
                         </ul>
                     ) : (
