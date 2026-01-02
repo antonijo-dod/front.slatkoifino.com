@@ -32,6 +32,9 @@ const SwiperImages = ({ images }: { images: StrapiImage[] }) => {
                 src={image.url}
                 alt={image.name}
                 fill
+                className="object-cover"
+                sizes="(max-width: 768px) 67vw, (max-width: 1024px) 47vw, 467px"
+                priority={index === 0}
               />
             </div>
           </SwiperSlide>
