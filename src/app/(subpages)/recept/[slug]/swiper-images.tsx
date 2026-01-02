@@ -33,7 +33,7 @@ const SwiperImages = ({ images }: { images: StrapiImage[] }) => {
                 alt={image.name}
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) 90vw, (max-width: 1024px) 70vw, 700px"
+                sizes="(max-width: 768px) 67vw, (max-width: 1024px) 47vw, 467px"
                 priority={index === 0}
               />
             </div>
