@@ -113,8 +113,8 @@ export default function RootLayout({
                 />
               </Link>
               <p className="text-muted-foreground mb-4">
-                Donosi slast u vasu kuhinju s pažljivo osmišljenim receptima
-                kolača napravljenim s ljubavlju.
+                Donosi slast u vašu kuhinju s pažljivo osmišljenim receptima
+                kolača napravljenih s ljubavlju.
               </p>
             </div>
 
