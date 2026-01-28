@@ -8,7 +8,7 @@ type DonateButtonProps = {
 
 export function DonateButton({
   onClick,
-  label = "Podrži blog",
+  label = "Počasti me kolačićem!",
 }: DonateButtonProps) {
   return (
     <button
