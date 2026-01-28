@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, Facebook } from "lucide-react";
 import Image from "next/image";
+import { DonateButton } from "@/components/donate-button";
 
 export default function RootLayout({
   children,
@@ -13,6 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handlePaymentDonation = () => {
+    // Redirect to Stripe donation page
+    window.location.href = process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || "";
+  };
 
   return (
     <>
@@ -44,6 +50,7 @@ export default function RootLayout({
               >
                 Svi recepti
               </Link>
+              <DonateButton onClick={handlePaymentDonation} />
               {/* <Link
                 href="/about"
                 className="text-sm font-medium hover:text-pink-600 transition-colors"
@@ -89,6 +96,7 @@ export default function RootLayout({
               >
                 Svi recepti
               </Link>
+              <DonateButton onClick={handlePaymentDonation} />
             </div>
           )}
         </div>
