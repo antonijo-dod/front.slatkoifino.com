@@ -12,7 +12,7 @@ export function DonateButton({
 }: DonateButtonProps) {
   return (
     <a
-      onClick={url}
+      href={url}
       target="_blank" rel="noopener noreferrer"
       className="
             inline-flex items-center gap-2
