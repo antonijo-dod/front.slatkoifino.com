@@ -17,7 +17,7 @@ export default function RootLayout({
 
   const handlePaymentDonation = () => {
     // Redirect to Stripe donation page
-    window.location.href = process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || "";
+    window.open = process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || "", '_blank', 'noopener,noreferrer';
   };
 
   return (
