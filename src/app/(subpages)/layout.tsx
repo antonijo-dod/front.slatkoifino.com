@@ -15,11 +15,6 @@ export default function RootLayout({
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handlePaymentDonation = () => {
-    // Redirect to Stripe donation page
-    // window.open = process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || "", '_blank', 'noopener,noreferrer';
-  };
-
   return (
     <>
       <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
