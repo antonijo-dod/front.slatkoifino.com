@@ -2,7 +2,7 @@
 import { HeartIcon } from "lucide-react";
 
 type DonateButtonProps = {
-  onClick?: () => void;
+  url?: string;
   label?: string;
 };
 
@@ -11,8 +11,9 @@ export function DonateButton({
   label = "Počasti me kolačićem!",
 }: DonateButtonProps) {
   return (
-    <button
-      onClick={onClick}
+    <a
+      href={url}
+      target="_blank" rel="noopener noreferrer"
       className="
             inline-flex items-center gap-2
             rounded-full
@@ -27,6 +28,6 @@ export function DonateButton({
     >
       <HeartIcon className="h-4 w-4" />
       {label}
-    </button>
+    </a>
   );
 }
