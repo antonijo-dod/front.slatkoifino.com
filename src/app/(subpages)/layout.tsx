@@ -50,7 +50,7 @@ export default function RootLayout({
               >
                 Svi recepti
               </Link>
-              <DonateButton onClick={handlePaymentDonation} />
+              <DonateButton url={process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || ""} />
               {/* <Link
                 href="/about"
                 className="text-sm font-medium hover:text-pink-600 transition-colors"
@@ -96,7 +96,7 @@ export default function RootLayout({
               >
                 Svi recepti
               </Link>
-              <DonateButton onClick={handlePaymentDonation} />
+              <DonateButton url={process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || ""} />
             </div>
           )}
         </div>
