@@ -7,7 +7,7 @@ type DonateButtonProps = {
 };
 
 export function DonateButton({
-  onClick,
+  url = "",
   label = "Počasti me kolačićem!",
 }: DonateButtonProps) {
   return (
