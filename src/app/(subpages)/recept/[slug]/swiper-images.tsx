@@ -14,8 +14,8 @@ const SwiperImages = ({ images }: { images: StrapiImage[] }) => {
   return (
     <>
       <Swiper
-        slidesPerView={1.5}
-        spaceBetween={30}
+        slidesPerView={images.length === 1 ? 1 : 1.5}
+        spaceBetween={16}
         pagination={{
           clickable: true,
         }}
