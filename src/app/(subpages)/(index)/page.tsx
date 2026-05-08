@@ -20,7 +20,8 @@ export default async function HomePage() {
     },
     next: { revalidate: 60 },
   });
-  const { data: allRecipes } = await res.json();
+  const { data } = await res.json();
+  const allRecipes = data ?? [];
 
   return (
     <div className="min-h-screen">
