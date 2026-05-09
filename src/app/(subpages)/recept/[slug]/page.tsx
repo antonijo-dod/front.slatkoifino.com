@@ -191,12 +191,22 @@ export default async function RecipePage({
                         {ingredients_text
                           .split("\n")
                           .filter((line: string) => line.trim())
-                          .map((line: string, index: number) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
-                              <span className="text-base">{line.trim()}</span>
-                            </li>
-                          ))}
+                          .map((line: string, index: number) => {
+                            const trimmed = line.trim()
+                            const isHeader = trimmed.endsWith(":")
+                            return isHeader ? (
+                              <li key={index} className="pt-2 first:pt-0">
+                                <p className="text-sm font-bold text-gray-500 uppercase tracking-wide">
+                                  {trimmed.slice(0, -1)}
+                                </p>
+                              </li>
+                            ) : (
+                              <li key={index} className="flex items-start gap-2">
+                                <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
+                                <span className="text-base">{trimmed}</span>
+                              </li>
+                            )
+                          })}
                       </ul>
                     )}
 
