@@ -38,7 +38,7 @@ export async function generateMetadata({
     `${process.env.API_URL}/api/recipes?populate=*&filters[slug][$eq]=${slug}`,
     {
       headers: { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` },
-      next: { revalidate: 3600 },
+      next: { revalidate: 60 },
     }
   );
   const { data } = await article.json();
@@ -61,7 +61,7 @@ export default async function RecipePage({
     `${process.env.API_URL}/api/recipes?pLevel=3&filters[slug][$eq]=${slug}`,
     {
       headers: { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` },
-      next: { revalidate: 3600 },
+      next: { revalidate: 60 },
     }
   );
   const { data } = await article.json();
@@ -82,7 +82,7 @@ export default async function RecipePage({
   // All recipes for related section
   const res = await fetch(`${process.env.API_URL}/api/recipes?pLevel=5`, {
     headers: { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` },
-    next: { revalidate: 3600 },
+    next: { revalidate: 60 },
   });
   const { data: allRecipes } = await res.json();
   const relatedRecipes = allRecipes
@@ -94,7 +94,7 @@ export default async function RecipePage({
     `${process.env.API_URL}/api/recipes?filters[slug][$eq]=${slug}&populate[instructions][populate]=*`,
     {
       headers: { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` },
-      next: { revalidate: 3600 },
+      next: { revalidate: 60 },
     }
   );
   const { data: recipeData } = await instructionsRes.json();
