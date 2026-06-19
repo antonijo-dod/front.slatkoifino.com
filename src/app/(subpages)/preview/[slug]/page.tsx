@@ -19,7 +19,7 @@ export default async function RecipePreviewPage({
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN_PREVIEW}`,
       },
-    }
+    },
   );
   const { data } = await article.json();
 
@@ -37,16 +37,19 @@ export default async function RecipePreviewPage({
   } = post;
 
   // Get all recipes
-  const res = await fetch(`${process.env.API_URL}/api/recipes?pLevel=3&status=draft`, {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+  const res = await fetch(
+    `${process.env.API_URL}/api/recipes?pLevel=3&status=draft`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
     },
-  });
+  );
   const { data: allRecipes } = await res.json();
 
   // // Get all recipes except the current one
   const filteredRecipes = allRecipes.filter(
-    (recipe: { slug: string }) => recipe.slug !== slug
+    (recipe: { slug: string }) => recipe.slug !== slug,
   );
 
   // Get the last 3 recipes, except the current one
@@ -60,7 +63,7 @@ export default async function RecipePreviewPage({
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
       },
-    }
+    },
   );
   const { data: recipe } = await instructionsUrl.json();
   const instructions = recipe[0]?.instructions;
@@ -145,8 +148,9 @@ export default async function RecipePreviewPage({
                 <CardTitle>Sastojci</CardTitle>
               </CardHeader>
               <CardContent>
-                {
-                  ingredients_group.length === 0 && ingredients && ingredients.length > 0 && (
+                {ingredients_group.length === 0 &&
+                  ingredients &&
+                  ingredients.length > 0 && (
                     <ul className="space-y-2">
                       {ingredients.map(
                         ({
@@ -170,18 +174,17 @@ export default async function RecipePreviewPage({
                               - {name}
                             </span>
                           </li>
-                        )
+                        ),
                       )}
                     </ul>
-                  )
-                }
+                  )}
                 <ul className="space-y-2">
-                  {
-                    ingredients_group.length > 0 ? ingredients_group.map(
+                  {ingredients_group.length > 0 ? (
+                    ingredients_group.map(
                       ({
                         id,
                         group_name,
-                        ingredients
+                        ingredients,
                       }: {
                         id: number;
                         group_name?: string;
@@ -193,36 +196,34 @@ export default async function RecipePreviewPage({
                         }[];
                       }) => (
                         <IngredientGroup key={id} groupName={group_name}>
-                          {
-                            ingredients.map(
-                              ({
-                                id,
-                                name,
-                                quantity,
-                                unit,
-                              }: {
-                                id: number;
-                                name: string;
-                                quantity?: number;
-                                unit?: string;
-                              }) => (
-                                <Ingredient
-                                  key={id}
-                                  quantity={quantity}
-                                  unit={unit}
-                                  name={name}
-                                />
-                              )
-                            )
-                          }
+                          {ingredients.map(
+                            ({
+                              id,
+                              name,
+                              quantity,
+                              unit,
+                            }: {
+                              id: number;
+                              name: string;
+                              quantity?: number;
+                              unit?: string;
+                            }) => (
+                              <Ingredient
+                                key={id}
+                                quantity={quantity}
+                                unit={unit}
+                                name={name}
+                              />
+                            ),
+                          )}
                         </IngredientGroup>
-                      )
-                    ) : (
-                      // TODO: Add message if no ingredients
-                      // <p>Nema sastojaka</p>
-                      <></>
+                      ),
                     )
-                  }
+                  ) : (
+                    // TODO: Add message if no ingredients
+                    // <p>Nema sastojaka</p>
+                    <></>
+                  )}
                 </ul>
               </CardContent>
             </Card>
@@ -261,7 +262,7 @@ export default async function RecipePreviewPage({
                           </div>
                         )}
                       </li>
-                    )
+                    ),
                   )}
                 </ol>
               </CardContent>
@@ -287,9 +288,7 @@ export default async function RecipePreviewPage({
                 >
                   <div className="relative h-48">
                     <Image
-                      src={
-                        recipe.card_image?.url || "/images/placeholder.jpeg"
-                      }
+                      src={recipe.card_image?.url || "/images/placeholder.jpeg"}
                       alt={recipe.title}
                       fill
                       className="object-cover"
@@ -304,7 +303,7 @@ export default async function RecipePreviewPage({
                     </Button>
                   </CardContent>
                 </Card>
-              )
+              ),
             )}
           </div>
         </div>

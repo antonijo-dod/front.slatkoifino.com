@@ -5,6 +5,7 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import Image from "next/image";
 import { StrapiImage } from "@/types/strapi-image";
+import { cloudinaryUrl } from "@/lib/cloudinaryUrl";
 
 const SwiperImages = ({ images }: { images: StrapiImage[] }) => {
   if (!images?.length) {
@@ -29,7 +30,7 @@ const SwiperImages = ({ images }: { images: StrapiImage[] }) => {
           >
             <div className="aspect-4/3 relative">
               <Image
-                src={image.url}
+                src={cloudinaryUrl(image.url)}
                 alt={image.name}
                 fill
                 className="object-cover"
