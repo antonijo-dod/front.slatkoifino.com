@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Users, ArrowLeft, ChefHat } from "lucide-react";
 import SwiperImages from "./swiper-images";
 import { Ingredient } from "./ingredient";
-import { IngredientGroup } from "./ingredient-group"
+import { IngredientGroup } from "./ingredient-group";
 
 export async function generateStaticParams() {
   const allRecipes = [];
@@ -16,7 +16,7 @@ export async function generateStaticParams() {
   do {
     const res = await fetch(
       `${process.env.API_URL}/api/recipes?pagination[page]=${page}&pagination[pageSize]=100`,
-      { headers: { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` } }
+      { headers: { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` } },
     );
     const { data: recipes, meta } = await res.json();
     if (meta?.pagination) pageCount = meta.pagination.pageCount;
@@ -39,7 +39,7 @@ export async function generateMetadata({
     {
       headers: { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` },
       next: { revalidate: 60 },
-    }
+    },
   );
   const { data } = await article.json();
   const post = data[0] || {};
@@ -62,7 +62,7 @@ export default async function RecipePage({
     {
       headers: { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` },
       next: { revalidate: 60 },
-    }
+    },
   );
   const { data } = await article.json();
   const post = data[0] || {};
@@ -95,7 +95,7 @@ export default async function RecipePage({
     {
       headers: { Authorization: `Bearer ${process.env.STRAPI_TOKEN}` },
       next: { revalidate: 60 },
-    }
+    },
   );
   const { data: recipeData } = await instructionsRes.json();
   const instructions = recipeData[0]?.instructions;
@@ -103,7 +103,7 @@ export default async function RecipePage({
   // Layout flags
   const hasIngredientsText = !!ingredients_text?.trim();
   const hasStructuredIngredients =
-    (ingredients?.length > 0) || (ingredients_group?.length > 0);
+    ingredients?.length > 0 || ingredients_group?.length > 0;
   const hasIngredients = hasIngredientsText || hasStructuredIngredients;
   const hasInstructions = instructions?.length > 0;
   const hasDescription = !!description?.trim();
@@ -127,7 +127,6 @@ export default async function RecipePage({
   return (
     <div className="min-h-screen py-8">
       <div className="max-w-4xl mx-auto px-4">
-
         {/* Back Button */}
         <Button variant="ghost" asChild className="mb-6">
           <Link href="/recepti" className="flex items-center gap-2">
@@ -167,16 +166,17 @@ export default async function RecipePage({
         </div>
 
         {/* Old-style recipes — description as intro above the grid */}
-        {!isNewStyle && hasDescription && (hasIngredients || hasInstructions) && (
-          <p className="text-lg text-muted-foreground whitespace-pre-line leading-relaxed mb-8">
-            {description}
-          </p>
-        )}
+        {!isNewStyle &&
+          hasDescription &&
+          (hasIngredients || hasInstructions) && (
+            <p className="text-lg text-muted-foreground whitespace-pre-line leading-relaxed mb-8">
+              {description}
+            </p>
+          )}
 
         {/* Main content grid */}
         {(hasIngredients || hasInstructions || hasDescription) && (
           <div className="grid lg:grid-cols-3 gap-8 mb-12">
-
             {/* Left column — Ingredients (only if exists) */}
             {hasIngredients && (
               <div className="lg:col-span-1">
@@ -192,8 +192,8 @@ export default async function RecipePage({
                           .split("\n")
                           .filter((line: string) => line.trim())
                           .map((line: string, index: number) => {
-                            const trimmed = line.trim()
-                            const isHeader = trimmed.endsWith(":")
+                            const trimmed = line.trim();
+                            const isHeader = trimmed.endsWith(":");
                             return isHeader ? (
                               <li key={index} className="pt-2 first:pt-0">
                                 <p className="text-sm font-bold text-gray-500 uppercase tracking-wide">
@@ -201,11 +201,14 @@ export default async function RecipePage({
                                 </p>
                               </li>
                             ) : (
-                              <li key={index} className="flex items-start gap-2">
+                              <li
+                                key={index}
+                                className="flex items-start gap-2"
+                              >
                                 <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
                                 <span className="text-base">{trimmed}</span>
                               </li>
-                            )
+                            );
                           })}
                       </ul>
                     )}
@@ -213,41 +216,81 @@ export default async function RecipePage({
                     {/* Legacy structured ingredients */}
                     {!hasIngredientsText && hasStructuredIngredients && (
                       <>
-                        {!(ingredients_group?.length > 0) && ingredients?.length > 0 && (
-                          <ul className="space-y-2">
-                            {ingredients.map(
-                              ({ id, name, quantity, unit }: {
-                                id: number; name: string;
-                                quantity?: number; unit?: string;
-                              }) => (
-                                <li key={id} className="flex items-start gap-2">
-                                  <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
-                                  <span className="text-base">
-                                    <span className="font-medium">
-                                      {quantity}{unit ? ` ${unit}` : ""}
-                                    </span>{" "}- {name}
-                                  </span>
-                                </li>
-                              )
-                            )}
-                          </ul>
-                        )}
+                        {!(ingredients_group?.length > 0) &&
+                          ingredients?.length > 0 && (
+                            <ul className="space-y-2">
+                              {ingredients.map(
+                                ({
+                                  id,
+                                  name,
+                                  quantity,
+                                  unit,
+                                }: {
+                                  id: number;
+                                  name: string;
+                                  quantity?: number;
+                                  unit?: string;
+                                }) => (
+                                  <li
+                                    key={id}
+                                    className="flex items-start gap-2"
+                                  >
+                                    <span className="w-2 h-2 bg-pink-500 rounded-full mt-2 flex-shrink-0" />
+                                    <span className="text-base">
+                                      <span className="font-medium">
+                                        {quantity}
+                                        {unit ? ` ${unit}` : ""}
+                                      </span>{" "}
+                                      - {name}
+                                    </span>
+                                  </li>
+                                ),
+                              )}
+                            </ul>
+                          )}
                         {ingredients_group?.length > 0 && (
                           <ul className="space-y-2">
                             {ingredients_group.map(
-                              ({ id, group_name, ingredients }: {
-                                id: number; group_name?: string;
-                                ingredients: { id: number; name: string; quantity?: number; unit?: string; }[];
+                              ({
+                                id,
+                                group_name,
+                                ingredients,
+                              }: {
+                                id: number;
+                                group_name?: string;
+                                ingredients: {
+                                  id: number;
+                                  name: string;
+                                  quantity?: number;
+                                  unit?: string;
+                                }[];
                               }) => (
-                                <IngredientGroup key={id} groupName={group_name}>
-                                  {ingredients.map(({ id, name, quantity, unit }: {
-                                    id: number; name: string;
-                                    quantity?: number; unit?: string;
-                                  }) => (
-                                    <Ingredient key={id} quantity={quantity} unit={unit} name={name} />
-                                  ))}
+                                <IngredientGroup
+                                  key={id}
+                                  groupName={group_name}
+                                >
+                                  {ingredients.map(
+                                    ({
+                                      id,
+                                      name,
+                                      quantity,
+                                      unit,
+                                    }: {
+                                      id: number;
+                                      name: string;
+                                      quantity?: number;
+                                      unit?: string;
+                                    }) => (
+                                      <Ingredient
+                                        key={id}
+                                        quantity={quantity}
+                                        unit={unit}
+                                        name={name}
+                                      />
+                                    ),
+                                  )}
                                 </IngredientGroup>
-                              )
+                              ),
                             )}
                           </ul>
                         )}
@@ -260,7 +303,6 @@ export default async function RecipePage({
 
             {/* Right column */}
             <div className={hasIngredients ? "lg:col-span-2" : "lg:col-span-3"}>
-
               {/* New-style: show description as preparation text */}
               {isNewStyle && hasDescription && (
                 <Card>
@@ -285,7 +327,10 @@ export default async function RecipePage({
                     <ol className="space-y-4">
                       {instructions.map(
                         // @ts-expect-error need fix latter
-                        ({ id, instruction_step, instruction_image }, index) => (
+                        (
+                          { id, instruction_step, instruction_image },
+                          index,
+                        ) => (
                           <li key={id} className="flex flex-col gap-4">
                             <div className="flex gap-4">
                               <span className="flex-shrink-0 w-8 h-8 bg-pink-500 text-white rounded-full flex items-center justify-center text-sm font-medium">
@@ -308,7 +353,7 @@ export default async function RecipePage({
                               </div>
                             )}
                           </li>
-                        )
+                        ),
                       )}
                     </ol>
                   </CardContent>
@@ -331,30 +376,38 @@ export default async function RecipePage({
           <div className="grid md:grid-cols-3 gap-6">
             {relatedRecipes.map(
               (recipe: {
-                id: number; title: string; description: string;
-                card_image: { url: string }; slug: string;
+                id: number;
+                title: string;
+                description: string;
+                card_image: { url: string };
+                slug: string;
               }) => (
-                <Card key={recipe.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <Card
+                  key={recipe.id}
+                  className="overflow-hidden hover:shadow-lg transition-shadow"
+                >
                   <div className="relative h-48">
                     <Image
                       src={recipe.card_image?.url || "/images/placeholder.jpeg"}
                       alt={recipe.title}
                       fill
                       className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   </div>
                   <CardContent className="p-4">
                     <h3 className="font-semibold mb-2">{recipe.title}</h3>
                     <Button asChild size="sm" className="w-full">
-                      <Link href={`/recept/${recipe.slug}`}>Pogledaj recept</Link>
+                      <Link href={`/recept/${recipe.slug}`}>
+                        Pogledaj recept
+                      </Link>
                     </Button>
                   </CardContent>
                 </Card>
-              )
+              ),
             )}
           </div>
         </div>
-
       </div>
     </div>
   );
