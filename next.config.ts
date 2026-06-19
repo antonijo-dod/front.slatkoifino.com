@@ -23,8 +23,6 @@ const nextConfig: NextConfig = {
         port: "",
       },
     ],
-    loader: "custom",
-    loaderFile: './claudinary-loader.js',
   },
   typescript: {
     // Ignore TypeScript errors during build
