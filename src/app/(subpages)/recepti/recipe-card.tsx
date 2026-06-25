@@ -9,21 +9,19 @@ import { Recipe } from "./actions";
 
 type RecipeCardProps = {
   recipe: Recipe;
+  priority?: boolean;
 };
 
-export function RecipeCard({ recipe }: RecipeCardProps) {
-  const cardImageUrl = recipe.card_image?.url?.replace(
-    "/upload/",
-    "/upload/h_512/"
-  );
-
+export function RecipeCard({ recipe, priority = false }: RecipeCardProps) {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col pt-0">
       <div className="relative h-64">
         <Image
-          src={cardImageUrl || "/images/placeholder.jpeg"}
+          src={recipe.card_image?.url || "/images/placeholder.jpeg"}
           alt={recipe.title}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          priority={priority}
           className="object-cover"
         />
         {/* TODO: Add category here */}
