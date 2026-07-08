@@ -7,21 +7,37 @@ export const metadata: Metadata = {
   description: "Svi recepti za kolače i torte",
 };
 
-export default async function RecipesPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
-
+export default async function RecipesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const params = await searchParams;
   const page = params.page ? parseInt(params.page as string, 10) : 1;
 
-  const res = await fetch(`${process.env.API_URL}/api/recipes?pLevel=3&sort=createdAt:desc&pagination[page]=${page}&pagination[pageSize]=12`, {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+  const res = await fetch(
+    `${process.env.API_URL}/api/recipes?pLevel=3&sort=createdAt:desc&pagination[page]=${page}&pagination[pageSize]=12`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
+      },
+      next: { revalidate: 60 }, // Revalidate every 60 seconds
     },
-    next: { revalidate: 60 }, // Revalidate every 60 seconds
-  });
+  );
   const recipeResponse = await res.json();
 
-  const currentPage = recipeResponse.meta.pagination.page;
-  const pageCount = recipeResponse.meta.pagination.pageCount;
+  const currentPage = recipeResponse?.meta?.pagination?.page;
+  const pageCount = recipeResponse?.meta?.pagination?.pageCount;
+
+  if (!recipeResponse || !recipeResponse.data) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg text-muted-foreground">
+          Nema recepata za prikaz.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-8">
