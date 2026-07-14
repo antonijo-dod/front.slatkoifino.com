@@ -45,7 +45,9 @@ export default function RootLayout({
               >
                 Svi recepti
               </Link>
-              <DonateButton url={process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || ""} />
+              <DonateButton
+                url={process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || ""}
+              />
               {/* <Link
                 href="/about"
                 className="text-sm font-medium hover:text-pink-600 transition-colors"
@@ -91,7 +93,9 @@ export default function RootLayout({
               >
                 Svi recepti
               </Link>
-              <DonateButton url={process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || ""} />
+              <DonateButton
+                url={process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || ""}
+              />
             </div>
           )}
         </div>
@@ -140,22 +144,6 @@ export default function RootLayout({
                     Svi recepti
                   </Link>
                 </li>
-                {/* <li>
-                  <Link
-                    href="/about"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/kontakt"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    Kontakt
-                  </Link>
-                </li> */}
               </ul>
             </div>
 
@@ -175,46 +163,13 @@ export default function RootLayout({
                   </a>
                 </div>
               </div>
-              {/* <ul className="space-y-2 text-sm">
-                <li>
-                  <Link
-                    href="/recept?category=chocolate"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    Chocolate
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/recept?category=vanilla"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    Vanilla
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/recept?category=fruit"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    Fruit
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/recept?category=cupcakes"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    Cupcakes
-                  </Link>
-                </li>
-              </ul> */}
             </div>
           </div>
 
           <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
             <p>
-              &copy; 2025 Slatko i fino. Napravljeno sa ❤️ za ljubitelje kuhanja
+              &copy; 2025 - {new Date().getFullYear()} Slatko i fino.
+              Napravljeno sa ❤️ za ljubitelje kuhanja
             </p>
           </div>
         </div>
