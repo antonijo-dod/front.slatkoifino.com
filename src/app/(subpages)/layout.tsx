@@ -48,18 +48,6 @@ export default function RootLayout({
               <DonateButton
                 url={process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || ""}
               />
-              {/* <Link
-                href="/about"
-                className="text-sm font-medium hover:text-pink-600 transition-colors"
-              >
-                About
-              </Link> */}
-              {/* <Link
-                href="/kontakt"
-                className="text-sm font-medium hover:text-pink-600 transition-colors"
-              >
-                Kontakt
-              </Link> */}
             </div>
 
             <Button
