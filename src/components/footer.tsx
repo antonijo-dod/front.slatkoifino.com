@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, Facebook } from "lucide-react";
+import { Facebook } from "lucide-react";
 
 function Footer() {
   return (
