@@ -1,17 +1,6 @@
 "use server";
 
-export type Recipe = {
-  id: number;
-  title: string;
-  description: string;
-  card_image: { url: string };
-  cover_image: { url: string };
-  prepTime: string;
-  servings: number;
-  rating: number;
-  category: string;
-  slug: string;
-};
+import type { Recipe } from "@/types/recipe";
 
 // Define the shape of the API response meta
 export type PaginationMeta = {

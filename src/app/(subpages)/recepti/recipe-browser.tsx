@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
-import { fetchRecipes, Recipe, PaginationMeta } from "./actions";
+import { fetchRecipes, type PaginationMeta } from "./actions";
+import type { Recipe } from "@/types/recipe";
 import { useDebounce } from "@/hooks/use-debounce";
 
 import { Input } from "@/components/ui/input";

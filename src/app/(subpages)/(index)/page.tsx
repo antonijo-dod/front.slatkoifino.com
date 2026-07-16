@@ -1,10 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Metadata } from "next";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Clock, Users, Star } from "lucide-react";
 import SearchDropdown from "./SearchDropdown";
+import { RecipeCard } from "../recepti/recipe-card";
+import type { Recipe } from "@/types/recipe";
 
 export const metadata: Metadata = {
   title: "Slatko i fino - Početna",
@@ -24,7 +22,7 @@ export default async function HomePage() {
     },
   );
   const { data } = await res.json();
-  const allRecipes = data ?? [];
+  const allRecipes: Recipe[] = data ?? [];
 
   return (
     <div className="min-h-screen">
@@ -63,69 +61,9 @@ export default async function HomePage() {
           </div>
         )}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {allRecipes.map(
-            (recipe: {
-              id: number;
-              title: string;
-              description: string;
-              card_image: { url: string };
-              cover_image: { url: string };
-              prepTime: string;
-              servings: number;
-              rating: number;
-              category: string;
-              slug: string;
-            }) => {
-              const cardImageUrl = recipe.card_image?.url?.replace(
-                "/upload/",
-                "/upload/h_256/",
-              );
-              return (
-                <Card
-                  key={recipe.id}
-                  className="overflow-hidden hover:shadow-lg transition-shadow pt-0"
-                >
-                  <div className="relative h-64">
-                    <Image
-                      src={cardImageUrl || "/images/placeholder.jpeg"}
-                      alt={recipe.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">
-                      {recipe.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-4 line-clamp-2">
-                      {recipe.description}
-                    </p>
-
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {recipe.prepTime}
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Users className="w-4 h-4" />
-                        {recipe.servings} serviranja
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        {recipe.rating}
-                      </div>
-                    </div>
-
-                    <Button asChild className="w-full">
-                      <Link href={`/recept/${recipe.slug}`}>
-                        Pogledaj recept
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            },
-          )}
+          {allRecipes.map((recipe: Recipe) => {
+            return <RecipeCard recipe={recipe} key={recipe.id} />;
+          })}
         </div>
       </section>
 

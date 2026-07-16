@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, Users } from "lucide-react";
-import { Recipe } from "./actions";
+import { Coffee, CakeSlice } from "lucide-react";
+import type { Recipe } from "@/types/recipe";
 
 type RecipeCardProps = {
   recipe: Recipe;
@@ -24,28 +24,26 @@ export function RecipeCard({ recipe, priority = false }: RecipeCardProps) {
           priority={priority}
           className="object-cover"
         />
-        {/* TODO: Add category here */}
-        {/* <div className="absolute top-4 left-4">
-          <span className="bg-white/90 text-xs font-medium px-2 py-1 rounded-full">
-            {recipe.category}
-          </span>
-        </div> */}
       </div>
       <CardContent className="p-6 flex flex-col flex-grow">
-        <h3 className="text-xl font-semibold mb-2">{recipe.title}</h3>
-        <p className="text-muted-foreground mb-4 line-clamp-2">
-          {recipe.description}
-        </p>
+        <div className="h-full">
+          <h3 className="text-xl font-semibold mb-2">{recipe.title}</h3>
+          <p className="text-muted-foreground mb-4 line-clamp-2">
+            {recipe.description}
+          </p>
+        </div>
 
-        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+        <div className="flex gap-4 text-sm text-muted-foreground mt-auto mb-4">
           <div className="flex items-center gap-1">
-            <Clock className="w-4 h-4" />
-            {recipe.prepTime}
+            <Coffee className="w-4 h-4" />
+            {recipe.difficulty || "srednje"}
           </div>
-          <div className="flex items-center gap-1">
-            <Users className="w-4 h-4" />
-            {recipe.servings}
-          </div>
+          {recipe.portions ? (
+            <div className="flex items-center gap-1">
+              <CakeSlice className="w-4 h-4" />
+              {recipe.portions}
+            </div>
+          ) : null}
         </div>
 
         <Button asChild className="w-full mt-auto">

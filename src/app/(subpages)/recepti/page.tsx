@@ -1,6 +1,17 @@
 import { Metadata } from "next";
 import { RecipeCard } from "./recipe-card";
 import Pagination from "./pagination";
+import type { Recipe } from "@/types/recipe";
+
+type RecipesResponse = {
+  data: Recipe[];
+  meta: {
+    pagination: {
+      page: number;
+      pageCount: number;
+    };
+  };
+};
 
 export const metadata: Metadata = {
   title: "Slatko i fino - Recepti",
@@ -24,7 +35,7 @@ export default async function RecipesPage({
       next: { revalidate: 60 }, // Revalidate every 60 seconds
     },
   );
-  const recipeResponse = await res.json();
+  const recipeResponse: RecipesResponse = await res.json();
 
   const currentPage = recipeResponse?.meta?.pagination?.page;
   const pageCount = recipeResponse?.meta?.pagination?.pageCount;
@@ -53,7 +64,6 @@ export default async function RecipesPage({
         {/* Recipes */}
         <div className="mt-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* @ts-expect-error Replace any with appropriate type */}
             {recipeResponse.data.map((recipe, i) => (
               <RecipeCard key={recipe.id} recipe={recipe} priority={i < 3} />
             ))}
