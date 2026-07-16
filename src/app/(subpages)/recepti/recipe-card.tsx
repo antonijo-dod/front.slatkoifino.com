@@ -41,7 +41,7 @@ export function RecipeCard({ recipe, priority = false }: RecipeCardProps) {
           {recipe.portions ? (
             <div className="flex items-center gap-1">
               <CakeSlice className="w-4 h-4" />
-              {recipe?.portions || ""}
+              {recipe.portions}
             </div>
           ) : null}
         </div>
