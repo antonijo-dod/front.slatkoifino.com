@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useInView } from "react-intersection-observer";
-import { fetchRecipes, PaginationMeta } from "./actions";
+import { fetchRecipes, type PaginationMeta } from "./actions";
 import type { Recipe } from "@/types/recipe";
 import { RecipeCard } from "./recipe-card";
 import { Loader2 } from "lucide-react";
