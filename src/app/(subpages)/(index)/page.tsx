@@ -1,12 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Metadata } from "next";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Clock, Users, Star } from "lucide-react";
 import SearchDropdown from "./SearchDropdown";
 import { RecipeCard } from "../recepti/recipe-card";
-import { Recipe } from "@/types/recipe";
+import type { Recipe } from "@/types/recipe";
 
 export const metadata: Metadata = {
   title: "Slatko i fino - Početna",
