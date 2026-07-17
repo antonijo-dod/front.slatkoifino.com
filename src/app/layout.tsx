@@ -30,22 +30,22 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        {process.env.NODE_ENV === "production" && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              data-domain="slatkoifino.com"
+              src="https://metrics.slatkoifino.com/js/script.js"
+            />
+            <Script
+              strategy="afterInteractive"
+              type="module"
+              src="https://static.cloudflareinsights.com/beacon.min.js"
+              data-cf-beacon='{"token": "0beb3cc56b984ddcb2a4b2e8ec46a1e5"}'
+            />
+          </>
+        )}
       </body>
-      {process.env.NODE_ENV === "production" && (
-        <>
-          <Script
-            strategy="afterInteractive"
-            data-domain="slatkoifino.com"
-            src="https://metrics.slatkoifino.com/js/script.js"
-          />
-          <Script
-            strategy="afterInteractive"
-            type="module"
-            src="https://static.cloudflareinsights.com/beacon.min.js"
-            data-cf-beacon='{"token": "0beb3cc56b984ddcb2a4b2e8ec46a1e5"}'
-          />
-        </>
-      )}
     </html>
   );
 }
