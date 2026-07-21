@@ -22,11 +22,6 @@ const nextConfig: NextConfig = {
     // Ignore TypeScript errors during build
     ignoreBuildErrors: true,
   },
-  env: {
-    API_URL: process.env.API_URL,
-    STRAPI_TOKEN: process.env.STRAPI_TOKEN,
-    STRAPI_TOKEN_PREVIEW: process.env.STRAPI_TOKEN_PREVIEW,
-  }
 };
 
 export default withSentryConfig(nextConfig, {
