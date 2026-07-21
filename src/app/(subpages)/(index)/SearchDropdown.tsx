@@ -43,6 +43,11 @@ export default function SearchDropdown() {
   const getRecipes = async (query: string) => {
     // Implement API call to fetch recipes based on query
     const res = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch recipes");
+    }
+
     const data = await res.json();
     return data;
   };
@@ -55,9 +60,16 @@ export default function SearchDropdown() {
         setIsSearching(false);
       } else {
         setIsSearching(true);
-        const data = await getRecipes(debouncedSearch);
-        setRecipes(data.recipes || []);
-        setIsSearching(false);
+
+        try {
+          const data = await getRecipes(debouncedSearch);
+          setRecipes(data.recipes || []);
+        } catch (error) {
+          console.error("Error fetching recipes:", error);
+          setRecipes([]);
+        } finally {
+          setIsSearching(false);
+        }
       }
     };
 
