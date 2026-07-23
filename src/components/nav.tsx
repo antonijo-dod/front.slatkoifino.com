@@ -28,6 +28,7 @@ function NavLink({
     <Link
       href={href}
       onClick={onClick}
+      aria-current={active ? "page" : undefined}
       className={`text-sm font-medium transition-colors hover:text-terracotta ${
         active ? "text-terracotta" : "text-ink"
       }`}
