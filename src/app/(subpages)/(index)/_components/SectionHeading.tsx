@@ -21,6 +21,13 @@ export function SectionHeading({
       <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl md:text-4xl text-ink">
         {title}
       </h2>
+      <div
+        className={`mt-4 flex items-center gap-2 ${isCenter ? "justify-center" : ""}`}
+        aria-hidden
+      >
+        <span className="h-px w-12 bg-terracotta" />
+        <span className="h-1.5 w-1.5 rounded-full bg-terracotta" />
+      </div>
       {description && (
         <p
           className={`mt-4 font-sans text-base leading-relaxed text-ink-soft ${

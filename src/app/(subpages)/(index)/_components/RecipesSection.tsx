@@ -37,7 +37,7 @@ export function RecipesSection({ recipes }: { recipes: Recipe[] }) {
               ))}
             </div>
 
-            <div className="mt-14 flex justify-center">
+            <div className="mt-10 flex justify-center">
               <Button
                 asChild
                 className="rounded-full bg-terracotta px-8 font-sans text-cream hover:bg-terracotta-dark"
