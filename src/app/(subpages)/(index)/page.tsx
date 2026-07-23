@@ -23,7 +23,7 @@ export default async function HomePage() {
   const recipes = allRecipes.slice(0, 6);
 
   return (
-    <div className="min-h-screen bg-[var(--home-cream)]">
+    <div className="min-h-screen bg-cream">
       <Hero />
       <RecipesSection recipes={recipes} />
     </div>

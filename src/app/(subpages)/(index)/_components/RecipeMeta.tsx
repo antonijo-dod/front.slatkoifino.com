@@ -22,7 +22,7 @@ export function RecipeMeta({ recipe, className = "" }: RecipeMetaProps) {
 
   return (
     <p
-      className={`font-sans text-xs tracking-[0.08em] uppercase text-[var(--home-ink-soft)] ${className}`}
+      className={`font-sans text-xs tracking-[0.08em] uppercase text-ink-soft ${className}`}
     >
       {items.join("  ·  ")}
     </p>

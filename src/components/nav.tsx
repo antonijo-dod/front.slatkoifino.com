@@ -2,16 +2,50 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { DonateButton } from "@/components/donate-button";
 import { useState } from "react";
 
+const NAV_LINKS = [
+  { href: "/", label: "Početna" },
+  { href: "/recepti", label: "Svi recepti" },
+];
+
+function NavLink({
+  href,
+  label,
+  active,
+  onClick,
+}: {
+  href: string;
+  label: string;
+  active: boolean;
+  onClick?: () => void;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`text-sm font-medium transition-colors hover:text-terracotta ${
+        active ? "text-terracotta" : "text-ink"
+      }`}
+    >
+      {label}
+      {active && (
+        <span className="mt-1 block h-px w-full bg-terracotta" aria-hidden />
+      )}
+    </Link>
+  );
+}
+
 function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+    <nav className="sticky top-0 z-50 bg-cream/95 backdrop-blur supports-[backdrop-filter]:bg-cream/80">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link
@@ -20,25 +54,20 @@ function Nav() {
           >
             <Image
               src="/images/slatkoIfino-logo.png"
-              alt="Sweet Creations Logo"
+              alt="Slatko i Fino logo"
               width={100}
               height={30}
             />
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
-            <Link
-              href="/"
-              className="text-sm font-medium hover:text-pink-600 transition-colors"
-            >
-              Početna
-            </Link>
-            <Link
-              href="/recepti"
-              className="text-sm font-medium hover:text-pink-600 transition-colors"
-            >
-              Svi recepti
-            </Link>
+            {NAV_LINKS.map((link) => (
+              <NavLink
+                key={link.href}
+                {...link}
+                active={pathname === link.href}
+              />
+            ))}
             <DonateButton
               url={process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || ""}
             />
@@ -47,7 +76,7 @@ function Nav() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden text-ink hover:bg-paper hover:text-terracotta"
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -59,22 +88,16 @@ function Nav() {
         {isMenuOpen && (
           <div
             id="mobile-menu"
-            className="md:hidden flex flex-col gap-4 py-4 border-t"
+            className="md:hidden flex flex-col gap-4 py-4 border-t border-line"
           >
-            <Link
-              href="/"
-              className="text-sm font-medium hover:text-pink-600 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Početna
-            </Link>
-            <Link
-              href="/recepti"
-              className="text-sm font-medium hover:text-pink-600 transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Svi recepti
-            </Link>
+            {NAV_LINKS.map((link) => (
+              <NavLink
+                key={link.href}
+                {...link}
+                active={pathname === link.href}
+                onClick={() => setIsMenuOpen(false)}
+              />
+            ))}
             <DonateButton
               url={process.env.NEXT_PUBLIC_STRIPE_DONATION_LINK || ""}
             />

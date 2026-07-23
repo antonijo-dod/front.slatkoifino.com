@@ -7,7 +7,7 @@ import { RecipeCard } from "./RecipeCard";
 
 export function RecipesSection({ recipes }: { recipes: Recipe[] }) {
   return (
-    <section className="bg-[var(--home-cream)] py-20 md:py-28">
+    <section className="bg-cream py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading
           eyebrow="Svježe iz kuhinje"
@@ -16,11 +16,11 @@ export function RecipesSection({ recipes }: { recipes: Recipe[] }) {
         />
 
         {recipes.length === 0 ? (
-          <div className="mt-14 border-t border-[var(--home-line)] py-16 text-center">
-            <h3 className="font-[family-name:var(--font-fraunces)] text-2xl text-[var(--home-ink)]">
+          <div className="mt-14 border-t border-line py-16 text-center">
+            <h3 className="font-[family-name:var(--font-fraunces)] text-2xl text-ink">
               Trenutno nema dodanih recepata
             </h3>
-            <p className="mt-2 font-sans text-sm text-[var(--home-ink-soft)]">
+            <p className="mt-2 font-sans text-sm text-ink-soft">
               Provjerite ponovno za nekoliko trenutaka.
             </p>
           </div>
@@ -40,10 +40,9 @@ export function RecipesSection({ recipes }: { recipes: Recipe[] }) {
             <div className="mt-14 flex justify-center">
               <Button
                 asChild
-                variant="outline"
-                className="rounded-none border-[var(--home-ink)] bg-transparent px-8 font-sans text-[var(--home-ink)] hover:bg-[var(--home-ink)] hover:text-[var(--home-cream)]"
+                className="rounded-full bg-terracotta px-8 font-sans text-cream hover:bg-terracotta-dark"
               >
-                <Link href={ROUTES.recipes}>Svi recepti</Link>
+                <Link href={ROUTES.recipes}>Pogledaj recepte</Link>
               </Button>
             </div>
           </>

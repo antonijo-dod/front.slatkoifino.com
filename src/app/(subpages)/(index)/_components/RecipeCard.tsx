@@ -21,7 +21,7 @@ export function RecipeCard({
   return (
     <Link
       href={ROUTES.recipe(recipe.slug)}
-      className={`group flex flex-col overflow-hidden rounded-2xl border border-[var(--home-line)] bg-[var(--home-paper)]/60 transition-colors hover:border-[var(--home-terracotta)] ${
+      className={`group flex flex-col overflow-hidden rounded-2xl border border-line bg-paper/60 transition-colors hover:border-terracotta ${
         featured ? "lg:col-span-2 lg:flex-row" : ""
       }`}
     >
@@ -50,7 +50,7 @@ export function RecipeCard({
         }`}
       >
         <h3
-          className={`font-[family-name:var(--font-fraunces)] text-[var(--home-ink)] transition-colors group-hover:text-[var(--home-terracotta-dark)] ${
+          className={`font-[family-name:var(--font-fraunces)] text-ink transition-colors group-hover:text-terracotta-dark ${
             featured ? "text-2xl lg:text-3xl" : "text-xl"
           }`}
         >
@@ -59,7 +59,7 @@ export function RecipeCard({
 
         {hasDescription && (
           <p
-            className={`font-sans text-sm leading-relaxed text-[var(--home-ink-soft)] ${
+            className={`font-sans text-sm leading-relaxed text-ink-soft ${
               featured ? "line-clamp-3" : "line-clamp-2"
             }`}
           >
@@ -69,7 +69,7 @@ export function RecipeCard({
 
         <RecipeMeta recipe={recipe} />
 
-        <span className="mt-1 inline-flex items-center gap-2 font-sans text-sm font-medium text-[var(--home-ink)] group-hover:text-[var(--home-terracotta-dark)]">
+        <span className="mt-1 inline-flex items-center gap-2 font-sans text-sm font-medium text-ink group-hover:text-terracotta-dark">
           Pogledaj recept
           <span
             aria-hidden

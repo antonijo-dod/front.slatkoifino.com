@@ -27,7 +27,7 @@ const highlightText = (text: string, query: string) => {
       return (
         <mark
           key={index}
-          className="bg-[var(--home-paper)] font-semibold text-[var(--home-terracotta-dark)]"
+          className="bg-paper font-semibold text-terracotta-dark"
         >
           {part}
         </mark>
@@ -97,12 +97,12 @@ export default function SearchDropdown() {
           value={searchQuery}
           placeholder="Pretraži recepte…"
           onChange={handleSearchBox}
-          className="relative w-full border-0 border-b border-[var(--home-line)] bg-transparent px-0 py-2.5 pr-8 text-sm text-[var(--home-ink)] placeholder:text-[var(--home-ink-soft)] focus:border-[var(--home-terracotta)] focus:outline-none"
+          className="relative w-full border-0 border-b border-line bg-transparent px-0 py-2.5 pr-8 text-sm text-ink placeholder:text-ink-soft focus:border-terracotta focus:outline-none"
         />
         {searchQuery && (
           <button
             onClick={handleClear}
-            className="absolute right-0 top-1/2 -translate-y-1/2 text-[var(--home-ink-soft)] hover:text-[var(--home-ink)]"
+            className="absolute right-0 top-1/2 -translate-y-1/2 text-ink-soft hover:text-ink"
             aria-label="Clear search"
           >
             <svg
@@ -121,9 +121,9 @@ export default function SearchDropdown() {
         )}
       </div>
       {debouncedSearch.length >= 3 && (
-        <div className="absolute z-30 mt-2 max-h-96 w-full overflow-auto border border-[var(--home-line)] bg-[var(--home-cream)] shadow-lg">
+        <div className="absolute z-30 mt-2 max-h-96 w-full overflow-auto border border-line bg-cream shadow-lg">
           {isSearching ? (
-            <div className="px-5 py-3 text-sm text-[var(--home-ink-soft)]">
+            <div className="px-5 py-3 text-sm text-ink-soft">
               Pretraživanje…
             </div>
           ) : recipes.length > 0 ? (
@@ -131,7 +131,7 @@ export default function SearchDropdown() {
               {recipes.map((recipe) => (
                 <li key={recipe.id}>
                   <Link
-                    className="block cursor-pointer px-5 py-3 text-sm text-[var(--home-ink)] hover:bg-[var(--home-paper)]"
+                    className="block cursor-pointer px-5 py-3 text-sm text-ink hover:bg-paper"
                     href={ROUTES.recipe(recipe.slug)}
                   >
                     {highlightText(recipe.title, debouncedSearch)}
@@ -140,7 +140,7 @@ export default function SearchDropdown() {
               ))}
             </ul>
           ) : (
-            <div className="px-5 py-3 text-sm text-[var(--home-ink-soft)]">
+            <div className="px-5 py-3 text-sm text-ink-soft">
               Nema rezultata
             </div>
           )}
