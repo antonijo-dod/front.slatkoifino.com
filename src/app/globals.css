@@ -41,6 +41,13 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-dark: var(--terracotta-dark);
+  --color-line: var(--line);
 }
 
 :root {
@@ -76,6 +83,15 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Warm editorial palette (homepage + shared nav/donate button) */
+  --cream: #faf3e9;
+  --paper: #f3e8d8;
+  --ink: #2a2119;
+  --ink-soft: #5c5044;
+  --terracotta: #b4522f;
+  --terracotta-dark: #9a4326;
+  --line: #dccbae;
 }
 
 .dark {

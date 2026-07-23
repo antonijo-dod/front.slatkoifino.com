@@ -18,12 +18,12 @@ export function DonateButton({
             inline-flex items-center gap-2
             rounded-full
             cursor-pointer
-            bg-pink-600 px-5 py-2.5
-            text-sm font-medium text-white
+            bg-terracotta px-5 py-2.5
+            text-sm font-medium text-cream
             shadow-sm
             transition
-            hover:bg-pink-700
-            focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2
+            hover:bg-terracotta-dark
+            focus:outline-none focus:ring-2 focus:ring-terracotta focus:ring-offset-2
         "
     >
       <HeartIcon className="h-4 w-4" />
