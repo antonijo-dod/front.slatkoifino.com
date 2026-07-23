@@ -25,7 +25,10 @@ const highlightText = (text: string, query: string) => {
   return parts.map((part, index) => {
     if (part.toLowerCase() === query.toLowerCase()) {
       return (
-        <mark key={index} className="bg-purple-100 font-semibold">
+        <mark
+          key={index}
+          className="bg-[var(--home-paper)] font-semibold text-[var(--home-terracotta-dark)]"
+        >
           {part}
         </mark>
       );
@@ -87,24 +90,24 @@ export default function SearchDropdown() {
   };
 
   return (
-    <div className=" text-gray-900 relative text-left">
+    <div className="relative text-left font-sans">
       <div className="relative">
         <input
           type="text"
           value={searchQuery}
-          placeholder="Pretraži recepte..."
+          placeholder="Pretraži recepte…"
           onChange={handleSearchBox}
-          className="relative px-6 py-4 focus:border-white bg-white rounded-md w-full pr-12"
+          className="relative w-full border-0 border-b border-[var(--home-line)] bg-transparent px-0 py-2.5 pr-8 text-sm text-[var(--home-ink)] placeholder:text-[var(--home-ink-soft)] focus:border-[var(--home-terracotta)] focus:outline-none"
         />
         {searchQuery && (
           <button
             onClick={handleClear}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-0 top-1/2 -translate-y-1/2 text-[var(--home-ink-soft)] hover:text-[var(--home-ink)]"
             aria-label="Clear search"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-4 w-4"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -118,15 +121,17 @@ export default function SearchDropdown() {
         )}
       </div>
       {debouncedSearch.length >= 3 && (
-        <div className="bg-white absolute z-30 w-full max-h-96 overflow-auto shadow-lg border border-gray-200 rounded-md mt-1">
+        <div className="absolute z-30 mt-2 max-h-96 w-full overflow-auto border border-[var(--home-line)] bg-[var(--home-cream)] shadow-lg">
           {isSearching ? (
-            <div className="px-6 py-4 text-gray-500">Pretraživanje...</div>
+            <div className="px-5 py-3 text-sm text-[var(--home-ink-soft)]">
+              Pretraživanje…
+            </div>
           ) : recipes.length > 0 ? (
             <ul>
               {recipes.map((recipe) => (
                 <li key={recipe.id}>
                   <Link
-                    className="px-6 py-4 hover:bg-gray-100 cursor-pointer block"
+                    className="block cursor-pointer px-5 py-3 text-sm text-[var(--home-ink)] hover:bg-[var(--home-paper)]"
                     href={ROUTES.recipe(recipe.slug)}
                   >
                     {highlightText(recipe.title, debouncedSearch)}
@@ -135,7 +140,9 @@ export default function SearchDropdown() {
               ))}
             </ul>
           ) : (
-            <div className="px-6 py-4 text-gray-500">Nema rezultata</div>
+            <div className="px-5 py-3 text-sm text-[var(--home-ink-soft)]">
+              Nema rezultata
+            </div>
           )}
         </div>
       )}
