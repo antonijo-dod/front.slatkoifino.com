@@ -1,5 +1,7 @@
 import { Metadata } from "next";
-import { RecipeCard } from "./recipe-card";
+import { RecipeCard } from "@/components/recipes/RecipeCard";
+import { SectionHeading } from "@/components/SectionHeading";
+import SearchDropdown from "@/components/recipes/SearchDropdown";
 import Pagination from "./pagination";
 import type { Recipe } from "@/types/recipe";
 
@@ -42,32 +44,44 @@ export default async function RecipesPage({
 
   if (!recipeResponse || !recipeResponse.data) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-lg text-muted-foreground">
-          Nema recepata za prikaz.
-        </p>
+      <div className="flex min-h-screen items-center justify-center bg-cream">
+        <p className="font-sans text-ink-soft">Nema recepata za prikaz.</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Svi recepti</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Pretraži sve recepte i pronadi inspiraciju za svoj sljedeći slatkiš.
-          </p>
+    <div className="min-h-screen bg-cream py-16 md:py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <SectionHeading
+          eyebrow="Iz moje kuhinje"
+          title="Svi recepti"
+          description="Pretraži recepte i pronađi nešto slatko za svaku priliku."
+          align="center"
+        />
+
+        <div className="mx-auto mt-8 max-w-2xl">
+          <SearchDropdown size="lg" />
         </div>
 
-        {/* Recipes */}
-        <div className="mt-12">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recipeResponse.data.map((recipe, i) => (
-              <RecipeCard key={recipe.id} recipe={recipe} priority={i < 3} />
-            ))}
-          </div>
+        <div className="mt-16">
+          {recipeResponse.data.length === 0 ? (
+            <div className="border-t border-line py-16 text-center">
+              <h3 className="font-[family-name:var(--font-fraunces)] text-2xl text-ink">
+                Nema pronađenih recepata
+              </h3>
+              <p className="mt-2 font-sans text-sm text-ink-soft">
+                Pokušajte ponovno kasnije.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 lg:grid-cols-3">
+              {recipeResponse.data.map((recipe, i) => (
+                <RecipeCard key={recipe.id} recipe={recipe} priority={i < 3} />
+              ))}
+            </div>
+          )}
+
           <Pagination currentPage={currentPage} pageCount={pageCount} />
         </div>
       </div>
