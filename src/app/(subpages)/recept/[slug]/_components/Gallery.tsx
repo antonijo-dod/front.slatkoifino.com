@@ -61,8 +61,14 @@ export function Gallery({ images, title }: GalleryProps) {
         aria-label="Galerija slika recepta"
         tabIndex={0}
         onKeyDown={(event) => {
-          if (event.key === "ArrowLeft") goTo(selectedIndex - 1);
-          if (event.key === "ArrowRight") goTo(selectedIndex + 1);
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            goTo(selectedIndex - 1);
+          }
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            goTo(selectedIndex + 1);
+          }
         }}
       >
         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-paper">
