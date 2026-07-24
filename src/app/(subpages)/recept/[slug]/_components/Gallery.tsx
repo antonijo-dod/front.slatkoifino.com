@@ -42,11 +42,21 @@ export function Gallery({ images, title }: GalleryProps) {
     );
   };
 
+  const selectedImage = images[selectedIndex];
+  // Content author uploads unedited 4:3 phone photos, landscape or portrait.
+  // Cropping a portrait shot to fill a landscape frame would cut off real
+  // content, so only cover-fit when the source is landscape/near-square —
+  // portrait sources are shown in full (contain) instead.
+  const isPortraitSource =
+    !!selectedImage.width &&
+    !!selectedImage.height &&
+    selectedImage.height > selectedImage.width;
+
   return (
     <div>
       {/* Desktop: dominant image + thumbnail strip */}
       <div
-        className="hidden md:block"
+        className="hidden md:block md:max-w-3xl"
         role="group"
         aria-label="Galerija slika recepta"
         tabIndex={0}
@@ -55,14 +65,14 @@ export function Gallery({ images, title }: GalleryProps) {
           if (event.key === "ArrowRight") goTo(selectedIndex + 1);
         }}
       >
-        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-paper">
           <Image
-            src={images[selectedIndex].url}
-            alt={getAlt(images[selectedIndex], selectedIndex)}
+            src={selectedImage.url}
+            alt={getAlt(selectedImage, selectedIndex)}
             fill
             priority
             sizes="(max-width: 1024px) 100vw, 768px"
-            className="object-cover"
+            className={isPortraitSource ? "object-contain" : "object-cover"}
           />
         </div>
         <div className="mt-3 flex gap-3">
