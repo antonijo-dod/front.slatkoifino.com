@@ -37,10 +37,11 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
     };
   }, [open]);
 
-  const getUrl = () =>
-    typeof window !== "undefined"
-      ? `${window.location.origin}${ROUTES.recipe(slug)}`
-      : "";
+  const getUrl = () => {
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+    const path = ROUTES.recipe(slug);
+    return baseUrl ? `${baseUrl}${path}` : path;
+  };
 
   const handleTriggerClick = async () => {
     if (typeof navigator !== "undefined" && navigator.share) {
