@@ -55,7 +55,7 @@ export function Gallery({ images, title }: GalleryProps) {
           if (event.key === "ArrowRight") goTo(selectedIndex + 1);
         }}
       >
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg">
           <Image
             src={images[selectedIndex].url}
             alt={getAlt(images[selectedIndex], selectedIndex)}

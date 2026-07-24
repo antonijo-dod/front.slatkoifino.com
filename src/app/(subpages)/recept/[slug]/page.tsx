@@ -46,10 +46,18 @@ export async function generateMetadata({
   );
   const { data } = await article.json();
   const post = data[0] || {};
-  const { title, description, seo_title, seo_description } = post;
+  const { title, seo_title, seo_description } = post;
+
+  // `description` holds preparation instructions, not a marketing/SEO
+  // summary — never fall back to it here. Without a real seo_description,
+  // fall back to a deterministic, non-AI sentence built from the title.
+  const metaDescription = seo_description
+    ? `Slatko i fino - ${seo_description}`
+    : `${title} — recept, sastojci i priprema na Slatko i fino.`;
+
   return {
     title: `Slatko i fino - ${seo_title || title}`,
-    description: `Slatko i fino - ${seo_description || description}`,
+    description: metaDescription,
   };
 }
 
@@ -154,9 +162,13 @@ export default async function RecipePage({
 
         {/* Ingredients + preparation */}
         {(hasIngredients || hasPreparation) && (
-          <div className="mt-12 grid gap-10 lg:grid-cols-3 lg:gap-16">
+          <div
+            className={`mt-12 grid gap-10 lg:gap-16 ${
+              hasIngredients ? "lg:grid-cols-[2fr_3fr]" : ""
+            }`}
+          >
             {hasIngredients && (
-              <div className="lg:sticky lg:top-28 lg:col-span-1 lg:self-start">
+              <div className="lg:sticky lg:top-28 lg:self-start">
                 <IngredientsPanel
                   ingredientsText={ingredients_text}
                   ingredients={ingredients}
@@ -164,7 +176,7 @@ export default async function RecipePage({
                 />
               </div>
             )}
-            <div className={hasIngredients ? "lg:col-span-2" : "lg:col-span-3"}>
+            <div>
               <PreparationPanel
                 description={description}
                 instructions={instructions}

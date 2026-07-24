@@ -90,11 +90,11 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
       <button
         type="button"
         onClick={handleTriggerClick}
-        className="inline-flex min-h-11 items-center gap-2 rounded-sm font-sans text-sm font-medium text-ink-soft transition-colors hover:text-terracotta-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta"
+        className="-mx-1 inline-flex min-h-11 items-center gap-2 rounded-sm px-1 font-sans text-sm font-medium text-ink-soft underline decoration-transparent decoration-2 underline-offset-4 transition-colors hover:text-terracotta-dark hover:decoration-terracotta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta"
         aria-haspopup="menu"
         aria-expanded={open}
       >
-        <Share2 className="h-4 w-4" strokeWidth={1.75} />
+        <Share2 className="h-[18px] w-[18px]" strokeWidth={1.75} />
         Podijeli recept
       </button>
 

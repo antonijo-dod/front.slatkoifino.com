@@ -11,7 +11,7 @@ type RecipeHeaderProps = {
 
 export function RecipeHeader({ recipe }: RecipeHeaderProps) {
   return (
-    <div className="mt-8">
+    <div className="mt-5">
       <span className="font-sans text-xs font-medium tracking-[0.2em] uppercase text-terracotta">
         Iz moje kuhinje
       </span>
