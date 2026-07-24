@@ -101,7 +101,7 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
 
       {open && (
         <div
-          role="menu"
+          aria-label="Opcije dijeljenja"
           className="absolute left-0 z-30 mt-2 w-56 rounded-lg border border-line bg-cream p-1.5 shadow-lg"
         >
           {menuItems.map(({ label, icon: Icon, href }) => (
@@ -110,7 +110,6 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              role="menuitem"
               className="flex min-h-11 items-center gap-3 rounded-md px-3 font-sans text-sm text-ink transition-colors hover:bg-paper hover:text-terracotta-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta"
             >
               <Icon className="h-4 w-4 text-terracotta" strokeWidth={1.75} />
@@ -119,7 +118,6 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
           ))}
           <button
             type="button"
-            role="menuitem"
             onClick={handleCopyLink}
             className="flex min-h-11 w-full items-center gap-3 rounded-md px-3 font-sans text-sm text-ink transition-colors hover:bg-paper hover:text-terracotta-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta"
           >
