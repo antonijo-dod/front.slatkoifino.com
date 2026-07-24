@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import SearchDropdown from "../SearchDropdown";
+import SearchDropdown from "@/components/recipes/SearchDropdown";
 
 export function HeroSearchTrigger() {
   const [open, setOpen] = useState(false);

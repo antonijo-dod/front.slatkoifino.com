@@ -8,7 +8,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 
 import { Input } from "@/components/ui/input";
 import { Search, Loader2 } from "lucide-react";
-import { RecipeCard } from "./recipe-card";
+import { RecipeCard } from "@/components/recipes/RecipeCard";
 
 export function RecipeBrowser() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);

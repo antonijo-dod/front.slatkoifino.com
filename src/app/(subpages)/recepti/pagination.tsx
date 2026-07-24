@@ -53,16 +53,16 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
     if (pageCount <= 1) return null;
 
     return (
-        <div className="flex justify-center items-center mt-8 md:mt-12">
+        <div className="flex justify-center items-center mt-12 md:mt-16">
             {/* Mobile-first layout */}
             <div className="flex items-center space-x-1 md:space-x-2">
                 {/* Previous button */}
                 <Button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    className="h-8 w-8 p-0 md:h-10 md:w-auto md:px-4 md:py-2"
+                    className="h-9 w-9 rounded-md border border-line p-0 font-sans text-ink-soft hover:border-terracotta hover:bg-paper hover:text-terracotta-dark disabled:opacity-40 md:h-10 md:w-auto md:px-4 md:py-2"
                     aria-label="Previous page"
                 >
                     <ChevronLeft className="h-4 w-4" />
@@ -71,7 +71,7 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
 
                 {/* Mobile: Show only current page info */}
                 <div className="flex items-center md:hidden">
-                    <span className="px-3 py-1 text-sm text-muted-foreground">
+                    <span className="px-3 py-1 font-sans text-sm text-ink-soft">
                         {currentPage} / {pageCount}
                     </span>
                 </div>
@@ -81,15 +81,15 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
                     {getVisiblePages().map((page, index) => (
                         <div key={index}>
                             {page === '...' ? (
-                                <span className="px-3 py-2 text-muted-foreground">...</span>
+                                <span className="px-3 py-2 font-sans text-ink-soft">...</span>
                             ) : (
                                 <Button
                                     onClick={() => handlePageChange(page as number)}
-                                    variant={currentPage === page ? "default" : "outline"}
+                                    variant="ghost"
                                     size="sm"
-                                    className={`h-10 w-10 ${currentPage === page
-                                        ? 'bg-pink-500 hover:bg-pink-600 text-white border-pink-500'
-                                        : 'hover:bg-pink-50 hover:border-pink-200'
+                                    className={`h-10 w-10 rounded-md border font-sans ${currentPage === page
+                                        ? 'border-terracotta text-terracotta font-semibold bg-transparent hover:bg-transparent'
+                                        : 'border-transparent text-ink-soft hover:border-line hover:bg-paper hover:text-ink'
                                         }`}
                                 >
                                     {page}
@@ -103,9 +103,9 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
                 <Button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === pageCount}
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    className="h-8 w-8 p-0 md:h-10 md:w-auto md:px-4 md:py-2"
+                    className="h-9 w-9 rounded-md border border-line p-0 font-sans text-ink-soft hover:border-terracotta hover:bg-paper hover:text-terracotta-dark disabled:opacity-40 md:h-10 md:w-auto md:px-4 md:py-2"
                     aria-label="Next page"
                 >
                     <ChevronRight className="h-4 w-4" />
@@ -118,7 +118,7 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
                 <select
                     value={currentPage}
                     onChange={(e) => handlePageChange(parseInt(e.target.value))}
-                    className="text-sm border rounded px-2 py-1 bg-background"
+                    className="rounded-md border border-line bg-cream px-2 py-1 font-sans text-sm text-ink"
                     aria-label="Jump to page"
                 >
                     {Array.from({ length: pageCount }, (_, i) => (

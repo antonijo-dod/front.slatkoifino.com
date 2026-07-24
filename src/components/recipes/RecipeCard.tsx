@@ -45,13 +45,11 @@ export function RecipeCard({
       </div>
 
       <div
-        className={`flex flex-1 flex-col justify-center gap-3 p-6 ${
-          featured ? "lg:p-9" : ""
-        }`}
+        className={`flex flex-1 flex-col gap-3 p-6 ${featured ? "lg:p-9" : ""}`}
       >
         <h3
           className={`font-[family-name:var(--font-fraunces)] text-ink transition-colors group-hover:text-terracotta-dark ${
-            featured ? "text-2xl lg:text-3xl" : "text-xl"
+            featured ? "text-2xl lg:text-3xl line-clamp-3" : "text-xl line-clamp-2"
           }`}
         >
           {recipe.title}
@@ -69,7 +67,7 @@ export function RecipeCard({
 
         <RecipeMeta recipe={recipe} />
 
-        <span className="mt-1 inline-flex items-center gap-2 font-sans text-sm font-medium text-ink group-hover:text-terracotta-dark">
+        <span className="mt-auto inline-flex items-center gap-2 pt-1 font-sans text-sm font-medium text-ink group-hover:text-terracotta-dark">
           Pogledaj recept
           <span
             aria-hidden

@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Recipe } from "@/types/recipe";
 import { ROUTES } from "@/routes";
 import { Button } from "@/components/ui/button";
-import { SectionHeading } from "./SectionHeading";
-import { RecipeCard } from "./RecipeCard";
+import { SectionHeading } from "@/components/SectionHeading";
+import { RecipeCard } from "@/components/recipes/RecipeCard";
 
 export function RecipesSection({ recipes }: { recipes: Recipe[] }) {
   return (
