@@ -136,3 +136,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Recipe gallery mobile carousel — recolor Swiper's default blue pagination
+   to the warm editorial palette instead of overriding its internals. */
+.recipe-gallery-swiper {
+  --swiper-pagination-color: var(--terracotta);
+  --swiper-pagination-bullet-inactive-color: var(--line);
+  --swiper-pagination-bullet-inactive-opacity: 1;
+}

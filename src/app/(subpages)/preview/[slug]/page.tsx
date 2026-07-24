@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Users, ArrowLeft } from "lucide-react";
-import SwiperImages from "../../recept/[slug]/swiper-images";
+import { Gallery } from "../../recept/[slug]/_components/Gallery";
 import { Ingredient } from "../../recept/[slug]/ingredient";
 import { IngredientGroup } from "../../recept/[slug]/ingredient-group";
 
@@ -95,7 +95,7 @@ export default async function RecipePreviewPage({
         {/* Recipe Header */}
         <div className="mb-8">
           <div className="relative rounded-lg overflow-hidden mb-6">
-            <SwiperImages images={cover_images} />
+            <Gallery images={cover_images ?? []} title={title ?? ""} />
             {/* <img
               src={cover_image?.url || "/images/placeholder.jpeg"}
               alt={title}

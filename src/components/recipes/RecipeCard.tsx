@@ -15,7 +15,12 @@ export function RecipeCard({
   featured = false,
   priority = false,
 }: RecipeCardProps) {
-  const hasDescription = (recipe.description?.trim().length ?? 0) >= 20;
+  // `description` is where recipes store their preparation text, not a
+  // marketing excerpt — a short value plausibly is a genuine teaser, a long
+  // one is instructions. Only show it in the short case, so the card never
+  // displays a truncated fragment of someone's recipe steps.
+  const descriptionLength = recipe.description?.trim().length ?? 0;
+  const hasDescription = descriptionLength >= 20 && descriptionLength <= 220;
   const imageUrl = recipe.card_image?.url || "/images/placeholder.jpeg";
 
   return (
