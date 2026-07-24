@@ -92,7 +92,7 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
         type="button"
         onClick={handleTriggerClick}
         className="-mx-1 inline-flex min-h-11 items-center gap-2 rounded-sm px-1 font-sans text-sm font-medium text-ink-soft underline decoration-transparent decoration-2 underline-offset-4 transition-colors hover:text-terracotta-dark hover:decoration-terracotta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta"
-        aria-haspopup="menu"
+        aria-haspopup="true"
         aria-expanded={open}
       >
         <Share2 className="h-[18px] w-[18px]" strokeWidth={1.75} />
