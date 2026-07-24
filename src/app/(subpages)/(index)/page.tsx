@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const res = await fetch(
-    `${process.env.API_URL}/api/recipes?pLevel=3&sort=createdAt:desc&pagination[page]=1&pagination[pageSize]=6`,
+    `${process.env.API_URL}/api/recipes?pLevel=3&sort=createdAt:desc&pagination[page]=1&pagination[pageSize]=8`,
     {
       headers: {
         Authorization: `Bearer ${process.env.STRAPI_TOKEN}`,
@@ -20,12 +20,11 @@ export default async function HomePage() {
   );
   const { data } = await res.json();
   const allRecipes: Recipe[] = data ?? [];
-  const recipes = allRecipes.slice(0, 6);
 
   return (
     <div className="min-h-screen bg-cream">
       <Hero />
-      <RecipesSection recipes={recipes} />
+      <RecipesSection recipes={allRecipes} />
     </div>
   );
 }
