@@ -1,7 +1,7 @@
 import type React from "react";
 
 /**
- * Reserves a layout position for a future optional advertisement.
+ * Wrapper for an optional advertisement block.
  * Renders nothing unless explicitly given content — no placeholder,
  * no tracking, no third-party script.
  */
