@@ -31,6 +31,7 @@ export function Gallery({ images, title }: GalleryProps) {
           priority
           sizes="(max-width: 1024px) 100vw, 768px"
           className="object-cover"
+          unoptimized
         />
       </div>
     );
@@ -79,6 +80,7 @@ export function Gallery({ images, title }: GalleryProps) {
             priority
             sizes="(max-width: 1024px) 100vw, 768px"
             className={isPortraitSource ? "object-contain" : "object-cover"}
+            unoptimized
           />
         </div>
         <div className="mt-3 flex gap-3">
@@ -101,6 +103,7 @@ export function Gallery({ images, title }: GalleryProps) {
                 fill
                 sizes="80px"
                 className="object-cover"
+                unoptimized
               />
             </button>
           ))}
@@ -126,6 +129,7 @@ export function Gallery({ images, title }: GalleryProps) {
                   priority={index === 0}
                   sizes="100vw"
                   className="object-cover"
+                  unoptimized
                 />
               </div>
             </SwiperSlide>
