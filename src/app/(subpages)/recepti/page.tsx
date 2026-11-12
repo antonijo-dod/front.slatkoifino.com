@@ -30,9 +30,16 @@ export async function generateMetadata({
   searchParams,
 }: RecipesPageProps): Promise<Metadata> {
   const page = parsePage((await searchParams).page);
+  // Every paginated URL is its own indexable page (self-canonical below), so
+  // each needs its own title and description or they read as duplicates.
+  const isFirst = page === 1;
   return {
-    title: "Slatko i fino - Recepti",
-    description: "Svi recepti za kolače i torte",
+    title: isFirst
+      ? "Slatko i fino - Recepti"
+      : `Slatko i fino - Recepti (stranica ${page})`,
+    description: isFirst
+      ? "Svi recepti za kolače, torte i slastice na Slatko i fino — domaći recepti s popisom sastojaka i detaljnom pripremom."
+      : `Recepti za kolače, torte i slastice, stranica ${page} — domaći recepti s popisom sastojaka i detaljnom pripremom na Slatko i fino.`,
     // Each page lists different recipes, so page 2+ is canonical to itself,
     // not to page 1 (that would tell Google to ignore the deeper pages).
     alternates: {
