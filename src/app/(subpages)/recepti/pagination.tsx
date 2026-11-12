@@ -19,6 +19,10 @@ function pageHref(page: number) {
 const prevNextClassName =
     "h-9 w-9 rounded-md border border-line p-0 font-sans text-ink-soft hover:border-terracotta hover:bg-paper hover:text-terracotta-dark disabled:opacity-40 md:h-10 md:w-auto md:px-4 md:py-2";
 
+// A <span> can't match :disabled, so apply the disabled look explicitly
+// (same values the button's disabled: variants used).
+const inertClassName = "pointer-events-none opacity-40";
+
 export default function Pagination({ currentPage, pageCount }: PaginationProps) {
     const router = useRouter();
 
@@ -75,8 +79,10 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
         <nav aria-label="Stranice recepata" className="flex justify-center items-center mt-12 md:mt-16">
             {/* Mobile-first layout */}
             <div className="flex items-center space-x-1 md:space-x-2">
-                {/* Previous: a real link so crawlers can follow it; a disabled
-                    button (not a link) on the first page */}
+                {/* Previous: a real link so crawlers can follow it. On the first
+                    page there's nowhere to go, so render an inert placeholder —
+                    not a link, and not a <button> either (a control that does
+                    nothing; SEO tools also flag it as JS pagination). */}
                 {hasPrev ? (
                     <Button asChild variant="ghost" size="sm" className={prevNextClassName}>
                         <Link href={pageHref(currentPage - 1)} rel="prev" aria-label="Previous page">
@@ -84,8 +90,8 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
                         </Link>
                     </Button>
                 ) : (
-                    <Button disabled variant="ghost" size="sm" className={prevNextClassName} aria-label="Previous page">
-                        {prevContent}
+                    <Button asChild variant="ghost" size="sm" className={`${prevNextClassName} ${inertClassName}`}>
+                        <span aria-hidden="true">{prevContent}</span>
                     </Button>
                 )}
 
@@ -134,8 +140,8 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
                         </Link>
                     </Button>
                 ) : (
-                    <Button disabled variant="ghost" size="sm" className={prevNextClassName} aria-label="Next page">
-                        {nextContent}
+                    <Button asChild variant="ghost" size="sm" className={`${prevNextClassName} ${inertClassName}`}>
+                        <span aria-hidden="true">{nextContent}</span>
                     </Button>
                 )}
             </div>
