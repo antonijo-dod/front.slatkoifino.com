@@ -18,6 +18,18 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        // www serves an exact duplicate of the site; consolidate on the
+        // apex domain. Path and query string are carried over.
+        source: "/:path*",
+        has: [{ type: "host", value: "www.slatkoifino.com" }],
+        destination: "https://slatkoifino.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   typescript: {
     // Ignore TypeScript errors during build
     ignoreBuildErrors: true,

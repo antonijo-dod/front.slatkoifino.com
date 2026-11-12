@@ -3,6 +3,8 @@ type SectionHeadingProps = {
   title: string;
   description?: string;
   align?: "left" | "center";
+  /** Heading level; use "h1" when this is the page's main heading. */
+  as?: "h1" | "h2";
 };
 
 export function SectionHeading({
@@ -10,6 +12,7 @@ export function SectionHeading({
   title,
   description,
   align = "left",
+  as: Heading = "h2",
 }: SectionHeadingProps) {
   const isCenter = align === "center";
 
@@ -18,9 +21,9 @@ export function SectionHeading({
       <span className="font-sans text-xs font-medium tracking-[0.2em] uppercase text-terracotta">
         {eyebrow}
       </span>
-      <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl md:text-4xl text-ink">
+      <Heading className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl md:text-4xl text-ink">
         {title}
-      </h2>
+      </Heading>
       <div
         className={`mt-4 flex items-center gap-2 ${isCenter ? "justify-center" : ""}`}
         aria-hidden

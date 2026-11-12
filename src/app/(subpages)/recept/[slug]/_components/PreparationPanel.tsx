@@ -11,11 +11,11 @@ type PreparationPanelProps = {
   instructions?: LegacyInstruction[];
 };
 
-type ParsedSection = { header: string | null; body: string };
+export type ParsedSection = { header: string | null; body: string };
 
 // Same header-line convention already trusted for ingredients_text, applied
 // consistently here: a line ending in ":" starts a new (optional) subheading.
-function parsePreparationText(text: string): ParsedSection[] {
+export function parsePreparationText(text: string): ParsedSection[] {
   const lines = text.split("\n");
   const sections: ParsedSection[] = [];
   let currentHeader: string | null = null;

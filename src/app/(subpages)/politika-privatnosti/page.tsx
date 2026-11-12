@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Politika privatnosti - Slatko i fino',
   description: 'Pročitajte našu politiku privatnosti i kako koristimo kolačiće.',
+  alternates: { canonical: '/politika-privatnosti' },
 };
 
 export default function PrivacyPolicyPage() {
