@@ -6,6 +6,7 @@ import { RecipesSection } from "./_components/RecipesSection";
 export const metadata: Metadata = {
   title: "Slatko i fino - Početna",
   description: "Najbolji recepti za kolače i torte",
+  alternates: { canonical: "/" },
 };
 
 export default async function HomePage() {

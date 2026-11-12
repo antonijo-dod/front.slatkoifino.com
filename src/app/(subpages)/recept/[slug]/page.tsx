@@ -10,6 +10,8 @@ import { RecipeHeader } from "./_components/RecipeHeader";
 import { IngredientsPanel } from "./_components/IngredientsPanel";
 import { PreparationPanel } from "./_components/PreparationPanel";
 import { AdSlot } from "@/components/AdSlot";
+import { ROUTES } from "@/routes";
+import { buildRecipeJsonLd, serializeJsonLd } from "./recipe-jsonld";
 
 export async function generateStaticParams() {
   const allRecipes = [];
@@ -58,6 +60,7 @@ export async function generateMetadata({
   return {
     title: `Slatko i fino - ${seo_title || title}`,
     description: metaDescription,
+    alternates: { canonical: ROUTES.recipe(slug) },
   };
 }
 
@@ -140,6 +143,16 @@ export default async function RecipePage({
 
   return (
     <div className="min-h-screen bg-cream py-8 md:py-12">
+      {title && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: serializeJsonLd(
+              buildRecipeJsonLd({ ...post, slug, instructions }),
+            ),
+          }}
+        />
+      )}
       <div className="mx-auto max-w-6xl px-6">
         {/* Back link */}
         <Link

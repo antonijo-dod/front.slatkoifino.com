@@ -25,7 +25,7 @@ type ParsedGroup = { header: string | null; items: string[] };
 // Same convention already trusted for this field today: a line ending in
 // ":" on its own starts a new group (e.g. "TIJESTO:"); everything else is
 // an ingredient line belonging to the current group.
-function parseIngredientsText(text: string): ParsedGroup[] {
+export function parseIngredientsText(text: string): ParsedGroup[] {
   const lines = text
     .split("\n")
     .map((line) => line.trim())

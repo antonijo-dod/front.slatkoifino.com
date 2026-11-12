@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
+import { SITE_URL } from "@/lib/site";
 
 import "./globals.css";
 
@@ -15,6 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // Resolves relative canonicals/OG URLs against the apex domain, so a page
+  // served on www.* still declares https://slatkoifino.com as canonical.
+  metadataBase: new URL(SITE_URL),
   title: "Slatko i fino",
   description: "Slatko i fino - najbolji recepti za kolače i torte",
 };

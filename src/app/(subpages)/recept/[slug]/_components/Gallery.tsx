@@ -18,8 +18,13 @@ export function Gallery({ images, title }: GalleryProps) {
 
   if (!images?.length) return null;
 
+  // Never fall back to image.name: uploads are named "blob" or a raw file
+  // name, which is meaningless to screen readers and image search.
   const getAlt = (image: StrapiImage, index: number) =>
-    image.alternativeText || image.name || `${title} — slika ${index + 1}`;
+    image.alternativeText?.trim() ||
+    (images.length > 1
+      ? `${title} – fotografija ${index + 1}`
+      : `${title} – fotografija`);
 
   if (images.length === 1) {
     return (

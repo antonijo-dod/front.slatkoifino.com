@@ -1,23 +1,26 @@
 "use client";
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ROUTES } from '@/routes';
 
 type PaginationProps = {
     currentPage: number;
     pageCount: number;
 };
 
-export default function Pagination({ currentPage, pageCount }: PaginationProps) {
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
+// Page 1 lives at the bare listing URL so it never competes with a
+// duplicate "?page=1" variant.
+function pageHref(page: number) {
+    return page <= 1 ? ROUTES.recipes : `${ROUTES.recipes}?page=${page}`;
+}
 
-    const handlePageChange = (page: number) => {
-        const params = new URLSearchParams(searchParams);
-        params.set('page', page.toString());
-        replace(`${pathname}?${params.toString()}`);
-    };
+const prevNextClassName =
+    "h-9 w-9 rounded-md border border-line p-0 font-sans text-ink-soft hover:border-terracotta hover:bg-paper hover:text-terracotta-dark disabled:opacity-40 md:h-10 md:w-auto md:px-4 md:py-2";
+
+export default function Pagination({ currentPage, pageCount }: PaginationProps) {
+    const router = useRouter();
 
     // Generate page numbers based on screen size
     const getVisiblePages = () => {
@@ -52,22 +55,39 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
 
     if (pageCount <= 1) return null;
 
+    const hasPrev = currentPage > 1;
+    const hasNext = currentPage < pageCount;
+
+    const prevContent = (
+        <>
+            <ChevronLeft className="h-4 w-4" />
+            <span className="hidden md:inline ml-2">Prethodno</span>
+        </>
+    );
+    const nextContent = (
+        <>
+            <ChevronRight className="h-4 w-4" />
+            <span className="hidden md:inline ml-2">Sljedeće</span>
+        </>
+    );
+
     return (
-        <div className="flex justify-center items-center mt-12 md:mt-16">
+        <nav aria-label="Stranice recepata" className="flex justify-center items-center mt-12 md:mt-16">
             {/* Mobile-first layout */}
             <div className="flex items-center space-x-1 md:space-x-2">
-                {/* Previous button */}
-                <Button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 w-9 rounded-md border border-line p-0 font-sans text-ink-soft hover:border-terracotta hover:bg-paper hover:text-terracotta-dark disabled:opacity-40 md:h-10 md:w-auto md:px-4 md:py-2"
-                    aria-label="Previous page"
-                >
-                    <ChevronLeft className="h-4 w-4" />
-                    <span className="hidden md:inline ml-2">Prethodno</span>
-                </Button>
+                {/* Previous: a real link so crawlers can follow it; a disabled
+                    button (not a link) on the first page */}
+                {hasPrev ? (
+                    <Button asChild variant="ghost" size="sm" className={prevNextClassName}>
+                        <Link href={pageHref(currentPage - 1)} rel="prev" aria-label="Previous page">
+                            {prevContent}
+                        </Link>
+                    </Button>
+                ) : (
+                    <Button disabled variant="ghost" size="sm" className={prevNextClassName} aria-label="Previous page">
+                        {prevContent}
+                    </Button>
+                )}
 
                 {/* Mobile: Show only current page info */}
                 <div className="flex items-center md:hidden">
@@ -82,42 +102,50 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
                         <div key={index}>
                             {page === '...' ? (
                                 <span className="px-3 py-2 font-sans text-ink-soft">...</span>
-                            ) : (
+                            ) : page === currentPage ? (
+                                // Current page: same look, but not a link
                                 <Button
-                                    onClick={() => handlePageChange(page as number)}
+                                    asChild
                                     variant="ghost"
                                     size="sm"
-                                    className={`h-10 w-10 rounded-md border font-sans ${currentPage === page
-                                        ? 'border-terracotta text-terracotta font-semibold bg-transparent hover:bg-transparent'
-                                        : 'border-transparent text-ink-soft hover:border-line hover:bg-paper hover:text-ink'
-                                        }`}
+                                    className="h-10 w-10 rounded-md border font-sans border-terracotta text-terracotta font-semibold bg-transparent hover:bg-transparent"
                                 >
-                                    {page}
+                                    <span aria-current="page">{page}</span>
+                                </Button>
+                            ) : (
+                                <Button
+                                    asChild
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-10 w-10 rounded-md border font-sans border-transparent text-ink-soft hover:border-line hover:bg-paper hover:text-ink"
+                                >
+                                    <Link href={pageHref(page as number)}>{page}</Link>
                                 </Button>
                             )}
                         </div>
                     ))}
                 </div>
 
-                {/* Next button */}
-                <Button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === pageCount}
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 w-9 rounded-md border border-line p-0 font-sans text-ink-soft hover:border-terracotta hover:bg-paper hover:text-terracotta-dark disabled:opacity-40 md:h-10 md:w-auto md:px-4 md:py-2"
-                    aria-label="Next page"
-                >
-                    <ChevronRight className="h-4 w-4" />
-                    <span className="hidden md:inline ml-2">Sljedeće</span>
-                </Button>
+                {/* Next */}
+                {hasNext ? (
+                    <Button asChild variant="ghost" size="sm" className={prevNextClassName}>
+                        <Link href={pageHref(currentPage + 1)} rel="next" aria-label="Next page">
+                            {nextContent}
+                        </Link>
+                    </Button>
+                ) : (
+                    <Button disabled variant="ghost" size="sm" className={prevNextClassName} aria-label="Next page">
+                        {nextContent}
+                    </Button>
+                )}
             </div>
 
-            {/* Mobile: Jump to page input (optional) */}
+            {/* Mobile: Jump to page select. Progressive enhancement only —
+                the prev/next links above are what crawlers follow. */}
             <div className="md:hidden ml-4">
                 <select
                     value={currentPage}
-                    onChange={(e) => handlePageChange(parseInt(e.target.value))}
+                    onChange={(e) => router.push(pageHref(parseInt(e.target.value, 10)))}
                     className="rounded-md border border-line bg-cream px-2 py-1 font-sans text-sm text-ink"
                     aria-label="Jump to page"
                 >
@@ -128,6 +156,6 @@ export default function Pagination({ currentPage, pageCount }: PaginationProps) 
                     ))}
                 </select>
             </div>
-        </div>
+        </nav>
     );
 }

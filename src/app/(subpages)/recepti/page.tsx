@@ -15,18 +15,34 @@ type RecipesResponse = {
   };
 };
 
-export const metadata: Metadata = {
-  title: "Slatko i fino - Recepti",
-  description: "Svi recepti za kolače i torte",
+type RecipesPageProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default async function RecipesPage({
+// "?page=abc", "?page=0" or repeated params fall back to page 1.
+function parsePage(raw: string | string[] | undefined): number {
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  const page = value ? parseInt(value, 10) : 1;
+  return Number.isInteger(page) && page >= 1 ? page : 1;
+}
+
+export async function generateMetadata({
   searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
-  const params = await searchParams;
-  const page = params.page ? parseInt(params.page as string, 10) : 1;
+}: RecipesPageProps): Promise<Metadata> {
+  const page = parsePage((await searchParams).page);
+  return {
+    title: "Slatko i fino - Recepti",
+    description: "Svi recepti za kolače i torte",
+    // Each page lists different recipes, so page 2+ is canonical to itself,
+    // not to page 1 (that would tell Google to ignore the deeper pages).
+    alternates: {
+      canonical: page > 1 ? `/recepti?page=${page}` : "/recepti",
+    },
+  };
+}
+
+export default async function RecipesPage({ searchParams }: RecipesPageProps) {
+  const page = parsePage((await searchParams).page);
 
   const res = await fetch(
     `${process.env.API_URL}/api/recipes?pLevel=3&sort=createdAt:desc&pagination[page]=${page}&pagination[pageSize]=12`,
@@ -54,6 +70,7 @@ export default async function RecipesPage({
     <div className="min-h-screen bg-cream py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading
+          as="h1"
           eyebrow="Iz moje kuhinje"
           title="Svi recepti"
           description="Pretraži recepte i pronađi nešto slatko za svaku priliku."
