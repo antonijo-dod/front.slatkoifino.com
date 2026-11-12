@@ -69,7 +69,7 @@ function buildInstructions(recipe: RecipeSource) {
   const structured = (recipe.instructions ?? [])
     .map((step) => step.instruction_step?.trim())
     .filter((text): text is string => !!text);
-  if (structured.length > 0) {
+  if ((recipe.instructions?.length ?? 0) > 0) {
     return structured.map((text) => ({ "@type": "HowToStep", text }));
   }
   if (recipe.description?.trim()) {
